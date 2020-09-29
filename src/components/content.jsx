@@ -50,17 +50,16 @@ const Content = () => {
       </ul>
       <div className="word-explain">
         <div>
-          <button className="square-button" value="Merriam" id="Merriam" onClick={handleSelectDict}>Merriam Webster</button>
-          <button className="square-button" value="Dictionary" id="Dictionary" onClick={handleSelectDict}>Dictionary.com</button>
+          <button className="square-button" value="Merriam" id="Merriam" onClick={handleSelectDict}>Merriam</button>
+          <button className="square-button" value="Dictionary" id="Dictionary" onClick={handleSelectDict}>Dictionary</button>
           <button className="square-button" value="Cambridge" id="Cambridge" onClick={handleSelectDict}>Cambridge</button>
           <button className="square-button" value="Synonyms" id="Synonyms" onClick={handleSelectDict}>Synonyms</button>
-          <button className="square-button" value="Antonyms" id="Antonyms" onClick={handleSelectDict}>Antonyms</button>
         </div>
-        {dict === 'Merriam' && <iframe src={`https://www.merriam-webster.com/dictionary/${highlightWord.value}`} width="800" height="600" title="myFrame"></iframe>}
-        {dict === 'Dictionary' && <iframe src={`https://www.dictionary.com/browse/${highlightWord.value}`} width="800" height="600" title="myFrame"></iframe>}
-        {dict === 'Cambridge' && <iframe src={`https://dictionary.cambridge.org/dictionary/english/${highlightWord.value}`} width="800" height="600" title="myFrame"></iframe>}
-        {dict === 'Synonyms' && <iframe src={`https://www.wordhippo.com/what-is/another-word-for/${highlightWord.value}.html`} width="800" height="600" title="myFrame"></iframe>}
-        {dict === 'Antonyms' && <iframe src={`https://www.wordhippo.com/what-is/the-opposite-of/${highlightWord.value}.html`} width="800" height="600" title="myFrame"></iframe>}
+        {dict === 'Merriam' && <iframe src={`https://www.merriam-webster.com/dictionary/${highlightWord.value}`} width="720" height="600" title="myFrame"></iframe>}
+        {dict === 'Dictionary' && <iframe src={`https://www.dictionary.com/browse/${highlightWord.value}`} width="720" height="600" title="myFrame"></iframe>}
+        {dict === 'Cambridge' && <iframe src={`https://dictionary.cambridge.org/dictionary/english/${highlightWord.value}`} width="720" height="600" title="myFrame"></iframe>}
+        {dict === 'Synonyms' && <iframe src={`https://www.wordhippo.com/what-is/another-word-for/${highlightWord.value}.html`} width="720" height="600" title="myFrame"></iframe>}
+        {dict === 'Antonyms' && <iframe src={`https://www.wordhippo.com/what-is/the-opposite-of/${highlightWord.value}.html`} width="720" height="600" title="myFrame"></iframe>}
       </div>
     </div>
   )

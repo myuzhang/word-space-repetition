@@ -30,7 +30,6 @@ const NewWord = () => {
         <form onSubmit={handleSubmit}>
           <label htmlFor="newWord">Add New Word:</label>
           <input className="input-text" type="text" id="newWord" value={word} onChange={handleChange} placeholder="Please enter here"/>
-          <span className="underline"></span>
           <input className="round-button" type="submit" value="➕"/>
         </form>
       </div>

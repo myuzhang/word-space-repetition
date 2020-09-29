@@ -1,5 +1,5 @@
 .App {
-  margin: 20px 10%;
+  margin: 20px 2%;
 }
 
 .stat-wrapper {
@@ -96,7 +96,8 @@
   font-size: 1.5rem;
   margin-right: 20px;
   border-width:0px;
-  border:none;
+  border: none;
+  border-bottom: 1px solid blueviolet;
   outline-width: 0px;
   color: brown;
 }
