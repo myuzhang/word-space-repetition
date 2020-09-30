@@ -19,7 +19,7 @@ const Content = () => {
     setWords(words => {
       const dupWord = words.filter(word => word.value === newWord.value)
       if (dupWord.length === 0) {
-        return [...words, newWord]
+        return [newWord, ...words]
       }
       return words
     })
@@ -55,11 +55,11 @@ const Content = () => {
           <button className="square-button" value="Cambridge" id="Cambridge" onClick={handleSelectDict}>Cambridge</button>
           <button className="square-button" value="Synonyms" id="Synonyms" onClick={handleSelectDict}>Synonyms</button>
         </div>
-        {dict === 'Merriam' && <iframe src={`https://www.merriam-webster.com/dictionary/${highlightWord.value}`} width="720" height="600" title="myFrame"></iframe>}
-        {dict === 'Dictionary' && <iframe src={`https://www.dictionary.com/browse/${highlightWord.value}`} width="720" height="600" title="myFrame"></iframe>}
-        {dict === 'Cambridge' && <iframe src={`https://dictionary.cambridge.org/dictionary/english/${highlightWord.value}`} width="720" height="600" title="myFrame"></iframe>}
-        {dict === 'Synonyms' && <iframe src={`https://www.wordhippo.com/what-is/another-word-for/${highlightWord.value}.html`} width="720" height="600" title="myFrame"></iframe>}
-        {dict === 'Antonyms' && <iframe src={`https://www.wordhippo.com/what-is/the-opposite-of/${highlightWord.value}.html`} width="720" height="600" title="myFrame"></iframe>}
+        {dict === 'Merriam' && <iframe src={`https://www.merriam-webster.com/dictionary/${highlightWord.value}`} width="800" height="800" title="myFrame"></iframe>}
+        {dict === 'Dictionary' && <iframe src={`https://www.dictionary.com/browse/${highlightWord.value}`} width="800" height="800" title="myFrame"></iframe>}
+        {dict === 'Cambridge' && <iframe src={`https://dictionary.cambridge.org/dictionary/english/${highlightWord.value}`} width="800" height="800" title="myFrame"></iframe>}
+        {dict === 'Synonyms' && <iframe src={`https://www.wordhippo.com/what-is/another-word-for/${highlightWord.value}.html`} width="800" height="800" title="myFrame"></iframe>}
+        {dict === 'Antonyms' && <iframe src={`https://www.wordhippo.com/what-is/the-opposite-of/${highlightWord.value}.html`} width="800" height="800" title="myFrame"></iframe>}
       </div>
     </div>
   )
