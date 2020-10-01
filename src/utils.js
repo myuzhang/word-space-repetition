@@ -86,8 +86,6 @@ export const saveWordsToLocalStorage = todayWords => {
   }
 
   const todayDigit = getDateInDigit()
-  console.log(wordList);
-  
   const notTodayWords = wordList.filter(word => word.date !== todayDigit)
   const updatedWords = [...todayWords, ...notTodayWords]
   localStorage.setItem('Eng:Words', JSON.stringify(updatedWords))
@@ -99,11 +97,16 @@ export const getDateInDigit = (shiftDays = 0) => {
     today.setDate(today.getDate() + shiftDays)
   }
   const month = today.getMonth() + 1
+  const date = today.getDate()
   let monthLeadingZero = `${month}`
+  let dateLeadingZero = `${date}`
   if (month < 10) {
     monthLeadingZero = `0${month}`
   }
-  return parseInt(`${today.getFullYear()}${monthLeadingZero}${today.getDate()}`, 10)
+  if (date < 10) {
+    dateLeadingZero = `0${date}`
+  }
+  return parseInt(`${today.getFullYear()}${monthLeadingZero}${dateLeadingZero}`, 10)
 }
 
 export const getIncreaseId = () => new Date().getTime()
@@ -131,7 +134,7 @@ export const updateWordDate = (word, increase) => {
       }
     }
 
-    foundWord.date = foundWord.times > 7 ? getDateInDigit(30) : getDateInDigit(foundWord.times)
+    foundWord.date = foundWord.times > 7 ? getDateInDigit(45) : getDateInDigit(foundWord.times)
     localStorage.setItem('Eng:Words', JSON.stringify(wordList))
   }
 }
