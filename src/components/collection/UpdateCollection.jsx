@@ -11,14 +11,22 @@ export default function UpdateCollection({collection, setUpdateCollection}) {
     setCollectionName(event.target.value)
   }
 
-  function handleSubmit(event) {
+  function onKeyDown(event) {
     if (event.key === 'Enter' || event.keyCode === 13) {
-      const updatedCollection = {id: collection.id, name: event.target.value}
-      setUpdateCollection({})
-      updateCollectionToLocalStorage(updatedCollection)
-      dispatch(action.updateCollection(updatedCollection))
+      handleSubmit(event)
     }
   }
 
-  return <input type="text" value={collenctionName} title="👉Press enter to confirm👈🏿" onChange={handleChange} onKeyDown={handleSubmit}></input>
+  function onBlur(event) {
+    handleSubmit(event)
+  }
+
+  function handleSubmit(event) {
+    const updatedCollection = {id: collection.id, name: event.target.value}
+    setUpdateCollection({})
+    updateCollectionToLocalStorage(updatedCollection)
+    dispatch(action.updateCollection(updatedCollection))
+  }
+
+  return <input type="text" value={collenctionName} title="👉Press enter to confirm👈🏿" onChange={handleChange} onKeyDown={onKeyDown} onBlur={onBlur}></input>
 }
