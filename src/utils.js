@@ -1,94 +1,214 @@
-export const getTodaysWordsNumber = () => getTodayWords().length
+export const getTodayWordCount = () => getTodayWords().length
 
-export const getAllWordsNumber = () => getAllWords().length
+export const getTotalWordCount = () => getWords().length
 
-export const getAllWords = () => {
-  const storageWords = localStorage.getItem('Eng:Words')
-  if (!storageWords) {
-    return []
-  }
+export const getCollectionWordCount = collectionId => getWordsByCollectionId(collectionId).length
 
-  const wordList = JSON.parse(storageWords)
-  if (wordList.length === 0) {
-    return []
-  }
+export const getDefaultCollection = () => ({id: 'default', name: 'default'})
 
-  return wordList
-}
+export const initStorage = () => addCollectionToLocalStorage(getDefaultCollection())
+
+export const getWords = () => get().words
+
+export const getWordsByCollectionId = collectionId =>
+  getWords().filter(w => w.collectionId === collectionId)
 
 export const getTodayWords = () => {
-  const wordList = getAllWords()
-
+  const words = getWords()
   const todayDigit = getDateInDigit()
-  const todayWords = wordList.filter(word => word.date <= todayDigit)
+  const todayWords = words.filter(word => word.date <= todayDigit)
   
   return todayWords
 }
 
-export const deleteOneWordFromLocalStorage = word => {
-  const storageWords = localStorage.getItem('Eng:Words')
-  if (!storageWords) {
-    return
+export const getCollections = () => get().collections
+
+export const addWordToLocalStorage = word => {
+  const storage = get()
+  if (storage.words.length === 0) {
+    storage.words = [word]
+    save(storage)
+    return true
   }
 
-  const wordList = JSON.parse(storageWords)
-  if (wordList.length === 0) {
-    return
+  const found = storage.words.find(w => w.id === word.id)
+  if (!found) {
+    storage.words.unshift(word)
+    save(storage)
+    return true
   }
-
-  const leftWords = wordList.filter(w => w.value !== word.value)
-  localStorage.setItem('Eng:Words', JSON.stringify(leftWords))
+  return false
 }
 
-export const saveOneWordToLocalStorage = word => {
-  const storageWords = localStorage.getItem('Eng:Words')
-  if (!storageWords) {
-    localStorage.setItem('Eng:Words', JSON.stringify([word]))
+export const deleteWordFromLocalStorage = word => {
+  const storage = get()
+  if (storage.words.length === 0) {
     return
   }
+console.log(word);
 
-  const wordList = JSON.parse(storageWords)
-  if (wordList.length === 0) {
-    localStorage.setItem('Eng:Words', JSON.stringify([word]))
-    return
-  }
-
-  const dupWords = wordList.filter(w => w.value === word.value)
-  if (dupWords.length === 0) {
-    localStorage.setItem('Eng:Words', JSON.stringify([word, ...wordList]))
-  }
+  storage.words = storage.words.filter(w => w.id !== word.id)
+  save(storage)
 }
 
 export const updateWordToLocalStorage = word => {
-  const wordList = getAllWords()
-  const foundWord = wordList.find(w => w.id === word.id)
+  const storage = get()
+  const { words } = storage
+  const foundWord = words.find(w => w.id === word.id)
   if (foundWord) {
     foundWord.value = word.value
-    localStorage.setItem('Eng:Words', JSON.stringify(wordList))
+    foundWord.collectionId = word.collectionId
+    save(storage)
   }
 }
 
-export const saveWordsToLocalStorage = todayWords => {
-  if (!todayWords || todayWords.length === 0) {
+export const mergeWordsToLocalStorage = merge => {
+  if (!merge) {
     return
   }
 
-  const storageWords = localStorage.getItem('Eng:Words')
-  if (!storageWords) {
-    localStorage.setItem('Eng:Words', JSON.stringify(todayWords))
+  const storage = get()
+  let { collections, words } = storage
+  let { collections: mergeCollections, words: mergeWords } = merge
+
+  // merge collection by name
+  if (mergeCollections && mergeCollections.length !== 0) {
+    if (collections.length !== 0) {
+      mergeCollections.forEach(mc => {
+        const found = collections.find(c => c.name === mc.name)
+        if (found) {
+          if (mergeWords && mergeWords.length !== 0) {
+            mergeWords = mergeWords.map(mw => {
+              if (mw.collectionId === mc.id) {
+                mw.collectionId = found.id
+              }
+              return mw
+            })
+          }
+        }
+        if (!found) {
+          collections.push(mc)
+        }
+      })
+    } else {
+      storage.collections = mergeCollections
+    }
+    // always set default collection at the last position:
+    const defaultCollection = storage.collections.find(c => c.name === 'default')
+    storage.collections = storage.collections.filter(c => c.name !== 'default')
+    storage.collections.push(defaultCollection)
+  }
+
+  // merge words
+  if (mergeWords && mergeWords.length !== 0) {
+    if (words.length !== 0) {
+      mergeWords.forEach(mw => {
+        const found = words.find(w => w.value === mw.value && w.collectionId === mw.collectionId)
+        if (!found) {
+          words.push(mw)
+        }
+      })
+    } else {
+      storage.words = mergeWords
+    }
+  }
+
+  save(storage)
+}
+
+export const moveWordsFromCollectionToDefault = collection => {
+  const storage = get()
+  if (storage.collections.length === 0) {
+    storage.collections = [getDefaultCollection()]
+  }
+  const { words } = storage
+  if (words.length !== 0) {
+    words.forEach(w => {
+      if (w.collectionId === collection.id) {
+        w.collectionId = 'default'
+      }
+    })
+  }
+  // dedupe merged words:
+  storage.words = words.filter((word, position) => 
+    words.findIndex(w => w.value === word.value && w.colleciontId === word.colleciontId) === position)
+
+  save(storage)
+}
+
+export const addCollectionToLocalStorage = collection => {
+  let storage = get()
+  if (storage.collections.length === 0) {
+    storage.collections = [collection]
+    save(storage)
+    return true
+  }
+
+  const found = storage.collections.find(c => c.name === collection.name)
+  if (!found) {
+    storage.collections.unshift(collection)
+    save(storage)
+    return true
+  }
+  return false
+}
+
+export const deleteCollectionFromLocalStorage = collection => {
+  let storage = get()
+  if (storage.collections.length === 0) {
     return
   }
 
-  const wordList = JSON.parse(storageWords)
-  if (wordList.length === 0) {
-    localStorage.setItem('Eng:Words', JSON.stringify(todayWords))
+  let needDefault = false
+  storage.collections = storage.collections.filter(c => c.id !== collection.id)
+  if (storage.words.length !== 0) {
+    storage.words = storage.words.map(w => {
+      if (w.collectionId === collection.id) {
+        w.collectionId = 'default'
+        needDefault = true
+      }
+      return w
+    })
+  }
+
+  if (needDefault) {
+    const found = storage.collections.find(c => c.id === 'default')
+    if (!found) {
+      storage.collections.push(getDefaultCollection())
+    }
+  }
+  save(storage)
+}
+
+export const updateCollectionToLocalStorage = collection => {
+  let storage = get()
+  if (storage.collections.length === 0) {
+    return
+  }
+  const { collections } = storage
+  let found = false
+  for (const i in collections) {
+    if (collections[i].id === collection.id) {
+       collections[i].name = collection.name;
+       found = true
+       break;
+    }
+  }
+
+  if (!found) {
     return
   }
 
-  const todayDigit = getDateInDigit()
-  const notTodayWords = wordList.filter(word => word.date !== todayDigit)
-  const updatedWords = [...todayWords, ...notTodayWords]
-  localStorage.setItem('Eng:Words', JSON.stringify(updatedWords))
+  save(storage)
+}
+
+export const getCollectionsFromLocalStorage = () => {
+  const storage = get()
+  if (storage.collections.length === 0) {
+    return []
+  }
+
+  return storage.collections
 }
 
 export const getDateInDigit = (shiftDays = 0) => {
@@ -109,46 +229,59 @@ export const getDateInDigit = (shiftDays = 0) => {
   return parseInt(`${today.getFullYear()}${monthLeadingZero}${dateLeadingZero}`, 10)
 }
 
-export const getIncreaseId = () => new Date().getTime()
-
 export const updateWordDate = (word, increase) => {
-  const storageWords = localStorage.getItem('Eng:Words')
-  if (!storageWords) {
+  const storage  = get()
+  const { words } = storage
+
+  if (words.length === 0) {
     return
   }
 
-  const wordList = JSON.parse(storageWords)
-  if (wordList.length === 0) {
-    return
-  }
-
-  const foundWord = wordList.find(w => w.value === word.value)
+  const foundWord = words.find(w => w.value === word.value)
+  foundWord.date = foundWord.count > 7 ? getDateInDigit(45) : getDateInDigit(foundWord.count)
   if (foundWord) {
     if (increase) {
-      if (foundWord.times <= 7) {
-        foundWord.times += 1
+      if (foundWord.count <= 7) {
+        foundWord.count += 1
       }
     } else {
-      if (foundWord.times > 0) {
-        foundWord.times -= 1
+      if (foundWord.count > 0) {
+        foundWord.count -= 1
       }
     }
-
-    foundWord.date = foundWord.times > 7 ? getDateInDigit(45) : getDateInDigit(foundWord.times)
-    localStorage.setItem('Eng:Words', JSON.stringify(wordList))
+    save(storage)
   }
 }
 
-export const saveToFile = () => handleSaveToPC(getAllWords())
-
-export const restoreFromFile = (content) => saveWordsToLocalStorage(JSON.parse(content))
-
-export const handleSaveToPC = jsonData => {
-  const fileData = JSON.stringify(jsonData)
+export const saveToFile = () => {
+  const fileData = JSON.stringify(get())
   const blob = new Blob([fileData], {type: "text/plain"})
   const url = URL.createObjectURL(blob)
   const link = document.createElement('a')
-  link.download = 'LeoWords.json'
+  link.download = 'MyWords.json'
   link.href = url
   link.click()
+}
+
+export const restoreFromFile = (content) => mergeWordsToLocalStorage(JSON.parse(content))
+
+export function save(wordList) {
+  localStorage.setItem('Eng:Words', JSON.stringify(wordList))
+}
+
+export function get() {
+  const storageStream = localStorage.getItem('Eng:Words')
+  if (!storageStream) {
+    return {words:[], collections:[]}
+  }
+
+  const storage = JSON.parse(storageStream)
+
+  if (!storage.words) {
+    storage.words = []
+  }
+  if (!storage.collections) {
+    storage.collections = []
+  }
+  return storage
 }

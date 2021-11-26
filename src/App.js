@@ -1,19 +1,23 @@
 import React from 'react'
 import './App.css'
-import Statistic from './components/statistic'
-import NewWord from './components/newWord'
-import Content from './components/content'
-import Idom from './components/idiom'
+import Statistics from './components/statistics/Statistics'
+import AddWord from './components/word/AddWord'
+import AddCollection from './components/collection/AddCollection'
+import ListCollection from './components/collection/ListCollection'
+import Dictionary from './components/dictionary/Dictionary'
+import Idom from './components/idiom/idiom'
 
-function App() {
+export default function App() {
   return (
     <div className="App">
-      <Statistic />
+      <Statistics />
       <Idom />
-      <NewWord />
-      <Content />
+      <div className="item-container">
+        <AddWord />
+        <AddCollection />
+        <ListCollection />
+      </div>
+      <Dictionary />
     </div>
   );
 }
-
-export default App;

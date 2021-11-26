@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import idoms from '../data/idioms'
+import idoms from '../../data/idioms'
 
 const Idom = () => {
   const randomIdomIndex = () => Math.floor(Math.random() * Math.floor(idoms.length))

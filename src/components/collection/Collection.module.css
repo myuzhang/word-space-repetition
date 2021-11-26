@@ -1,0 +1,95 @@
+.navDropdown nav {
+  display: inline-block;
+  font-family: monospace;
+  font-size: 1rem;
+}
+
+.navDropdown ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+.navDropdown li {
+  color: darkblue;
+  background: lightgrey;
+  display: block;
+  float: left;
+  padding: 1rem;
+  position: relative;
+  text-decoration: none;
+  transition-duration: 0.5s;
+  padding: 10px;
+}
+
+.navDropdown .listContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.navDropdown ul li ul li button {
+  background: lightcoral;
+  visibility: hidden;
+  opacity: 0;
+  display: block;
+  position: relative;
+  transition: all 0.5s ease;
+  padding: 0;
+  margin-left: 2vh;
+  border: none;
+}
+
+.navDropdown li:hover,
+.navDropdown li:focus-within,
+.navDropdown li:hover button {
+  background: yellowgreen;
+  cursor: pointer;
+}
+
+.navDropdown ul li ul {
+  background: lightcoral;
+  visibility: hidden;
+  opacity: 0;
+  min-width: 25vw;
+  position: absolute;
+  transition: all 0.5s ease;
+  margin-top: 1rem;
+  left: 0;
+  display: none;
+  z-index: 1;
+}
+
+.navDropdown ul li:hover > ul,
+.navDropdown ul li:focus-within > ul,
+.navDropdown ul li ul:hover,
+.navDropdown ul li ul:focus,
+.navDropdown ul li ul li:hover button,
+.navDropdown ul li ul li:focus button {
+  visibility: visible;
+  opacity: 1;
+  display: inline-block;
+}
+
+.navDropdown ul li ul li {
+  clear: both;
+  width: 100%;
+}
+
+.listContainer input,
+.listContainer div {
+  width: 100%;
+  justify-self: stretch;
+}
+
+.listContainer input {
+  /* font-weight: bold; */
+  font-size: 1rem;
+  /* margin-right: 20px; */
+  border-width: 0px;
+  border: none;
+  border-bottom: 1px solid blueviolet;
+  outline-width: 0px;
+  background: yellowgreen;
+  color: brown;
+}

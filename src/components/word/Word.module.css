@@ -1,0 +1,81 @@
+.wordContainer {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  grid-auto-rows: auto;
+}
+
+.wordText {
+  border-bottom: 1px dashed;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+li .wordText { background-color: lightgray; }
+li:nth-child(odd) .wordText { background-color: rgb(240, 234, 234); }
+
+li .wordText:hover {
+  background-color: lightcoral
+}
+li:nth-child(odd) .wordText:hover {
+  background-color: coral
+}
+
+.modalContainer {
+  margin: auto;
+  width: 20%;
+  height: 35%;
+  background-color: papayawhip;
+}
+
+.modalContainer h2 {
+  margin-left: 20px;
+}
+
+.modalContainer form {
+  position: relative;
+  margin-left: 20px;
+  font-size: larger;
+}
+
+.modalContainer label,
+.modalContainer select {
+  margin: 10px;
+  display: block;
+}
+
+.modalContainer .inputUpdate {
+  margin: 10px;
+  font-size: 1.5rem;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid black;
+  display: block;
+}
+
+.modalContainer .rightSubmit {
+  margin-top: 20px;
+  position: absolute;
+  right: 10%;
+}
+
+.pointButton {
+	box-shadow:inset 0px 1px 0px 0px #a4e271;
+	background:linear-gradient(to bottom, #89c403 5%, #77a809 100%);
+	background-color:#89c403;
+	border-radius:6px;
+	border:1px solid #74b807;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #528009;
+}
+.pointButton:hover {
+	background:linear-gradient(to bottom, #77a809 5%, #89c403 100%);
+	background-color:#77a809;
+}

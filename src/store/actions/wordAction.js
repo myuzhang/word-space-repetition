@@ -1,31 +1,29 @@
-import { getDateInDigit, getIncreaseId } from '../../utils'
+import { nanoid } from 'nanoid'
+import { getDateInDigit } from '../../utils'
+import {ADD_WORD, DELETE_WORD, UPDATE_WORD, HIGHLIGHT_WORD } from '../../const'
 
-export const addNewWord = word => ({
-  type: 'addNewWord',
+export const addWord = word => ({
+  type: ADD_WORD,
   payload: {
-    id: getIncreaseId(),
-    value: word,
-    times: 0,
+    id: nanoid(),
+    collectionId: word.collectionId,
+    value: word.value,
+    count: 0,
     date: getDateInDigit()
   }
 })
 
 export const deleteWord = word => ({
-  type: 'deleteWord',
-  payload: {
-    id: 0,
-    value: word.value,
-    times: word.times,
-    date: word.date
-  }
+  type: DELETE_WORD,
+  payload: word
 })
 
-export const updateOldWord = word => ({
-  type: 'updateOldWord',
+export const updateWord = word => ({
+  type: UPDATE_WORD,
   payload: word
 })
 
 export const highlightWord = word => ({
-  type: 'highlightWord',
+  type: HIGHLIGHT_WORD,
   payload: word
 })
