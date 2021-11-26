@@ -26,7 +26,7 @@ export function collection(state = {type:'', collection: getDefaultCollection()}
 export function currentCollection(state = getDefaultCollection(), action) {
   switch(action.type) {
     case CHOOSE_COLLECTION:
-      return action.payload
+      return {...action.payload}
     default:
       return state
   }

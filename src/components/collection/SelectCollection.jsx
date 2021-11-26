@@ -7,13 +7,13 @@ export default function ListCollection({collection, updateCollection, setUpdateC
   const dispatch = useDispatch()
 
   function selectCollection() {
-    setCurrentCollection(collection.name)
+    setCurrentCollection({...collection})
     dispatch(action.chooseCollection(collection))
   }
 
   return (
     <>
-    {collection.id === updateCollection.id ? 
+    {collection.id && updateCollection.id && collection.id === updateCollection.id ? 
       <UpdateCollection collection={collection} setUpdateCollection={setUpdateCollection}/> : 
       <div onClick={selectCollection}>{collection.name}</div>}
     </>
