@@ -72,7 +72,9 @@ const Dictionary = () => {
     <div className="scroll-then-fix">
       <div className="content-wrapper">
         <ul className="word-list">
-          {words && words.length && words.map(word => word.value && <li key={word.id}><Word word={word}/></li>)}
+          {words && words.length === 0 ?
+          <p><span role="img" aria-label="grinning">😅</span> There is no word in this collection: <em>{currentCollection.name}</em></p> :
+          words.map(word => word.value && <li key={word.id}><Word word={word}/></li>)}
         </ul>
         <div>
           <div>
