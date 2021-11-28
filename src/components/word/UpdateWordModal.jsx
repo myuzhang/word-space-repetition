@@ -6,7 +6,7 @@ import className from 'classnames'
 import { getCollections, getDefaultCollection } from '../../utils'
 import styles from './Word.module.css';
 
-const UpdateWord = (props) => {
+export default function UpdateWordModal(props) {
   var subtitle
   const dispatch = useDispatch()
   const [word, setWord] = useState(props.word.value)
@@ -76,5 +76,3 @@ const UpdateWord = (props) => {
     </Modal>
   )
 }
-
-export default UpdateWord

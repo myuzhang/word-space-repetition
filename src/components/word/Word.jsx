@@ -2,10 +2,10 @@ import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import action from '../../store/actions'
 import { updateWordDate } from '../../utils'
-import UpdateWord from './UpdateWord'
+import UpdateWordModal from './UpdateWordModal'
 import styles from './Word.module.css'
 
-export default function Word({ wordWithCheckbox, wordsWithCheckbox, setWordsWithCheckbox, setIsAllSelected }) {
+export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
   const dispatch = useDispatch()
   const [confirm, setConfirm] = useState('🎯')
   const [again, setAgain] = useState('⏰')
@@ -53,12 +53,16 @@ export default function Word({ wordWithCheckbox, wordsWithCheckbox, setWordsWith
 
   function handleCheckboxClick() {
     const newState = !wordWithCheckbox.isChecked
-    // setIsChecked(newState)
-    const found = wordsWithCheckbox.findIndex(w => w.word.id === wordWithCheckbox.word.id)
-    wordsWithCheckbox[found].isChecked = newState
-    const allChecked = wordsWithCheckbox.every(w => w.isChecked)
-    setIsAllSelected(allChecked)
-    setWordsWithCheckbox([...wordsWithCheckbox])
+    const found = checkboxes.checkboxWords.findIndex(w => w.word.id === wordWithCheckbox.word.id)
+    if (found !== -1) {
+      checkboxes.checkboxWords[found].isChecked = newState
+      const allChecked = checkboxes.checkboxWords.every(w => w.isChecked)
+      setCheckboxes({
+        isAllSelected: allChecked,
+        checkboxWords: [...checkboxes.checkboxWords]
+      })
+    }
+
   }
 
   return (
@@ -74,7 +78,7 @@ export default function Word({ wordWithCheckbox, wordsWithCheckbox, setWordsWith
         <button onClick={handleConfirm} title="🧠 Click on it if you can know the meaning and it won't show after you click 7 times on another day"><span role="img" aria-label="thumbs up">{confirm}</span></button>
         <button onClick={handleAgain} title="⏳ Click on it if you don't know the meaning and the word will still stay in the list"><span role="img" aria-label="thinking face">{again}</span></button>
         <button onClick={openModal} title="🖋 Modify the word"><span role="img" aria-label="gear">✍️</span></button>
-        {modalOpen && <UpdateWord word={wordWithCheckbox.word} modalOpen={modalOpen} setModalOpen={setModalOpen}/>}
+        {modalOpen && <UpdateWordModal word={wordWithCheckbox.word} modalOpen={modalOpen} setModalOpen={setModalOpen}/>}
         <button onClick={handleDelete} title="⚠️ Remove the word from the list"><span role="img" aria-label="trash bin">🗑</span></button>
       </div>
     </div>

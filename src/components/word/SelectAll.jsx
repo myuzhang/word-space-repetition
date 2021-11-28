@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import styles from './Word.module.css'
-import MoveWords from './MoveWords';
+import MoveWords from './MoveWordsModal';
 
-export default function SelectAll({isAllSelected, setIsAllSelected, setWordsWithCheckbox}) {
+export default function SelectAll({checkboxes, setCheckboxes}) {
   const [modalOpen, setModalOpen] = useState(false)
 
   function openModal() {
@@ -10,20 +10,19 @@ export default function SelectAll({isAllSelected, setIsAllSelected, setWordsWith
   }
 
   function handleClick() {
-    const newState = !isAllSelected
-    setWordsWithCheckbox(prevWordsWithCheckbox =>
-      prevWordsWithCheckbox.map(pw => ({word: pw.word, isChecked: newState})))
-    setIsAllSelected(newState)
+    const newState = !checkboxes.isAllSelected
+    setCheckboxes({
+      isAllSelected: newState,
+      checkboxWords: checkboxes.checkboxWords.map(cw => ({word: cw.word, isChecked: newState}))
+    })
   }
 
   function handleDelete() {}
 
-  console.log('select-all');
-  
   return (
     <div className={styles.wordContainer}>
       <div className={styles.wordText}>
-        <input type="checkbox" checked={isAllSelected} onClick={handleClick} name="all" id="all"/>
+        <input type="checkbox" checked={checkboxes.isAllSelected} onClick={handleClick} name="all" id="all"/>
         <label className={styles.thick} htmlFor="all">Select All</label>
       </div>
       <div className={styles.padRight}>

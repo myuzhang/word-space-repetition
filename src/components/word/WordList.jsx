@@ -5,51 +5,66 @@ import {ADD_WORD, DELETE_WORD, UPDATE_WORD, HIGHLIGHT_WORD, DELETE_COLLECTION} f
 import Word from '../word/Word';
 import SelectAll from '../word/SelectAll'
 
+function checkIsAllSelected(checkboxWords) {
+  return checkboxWords.every(w => w.isChecked)
+}
+
 export default function WordList({ setHighlightWord }) {
-  const [wordsWithCheckbox, setWordsWithCheckbox] = useState([])
-  const [isAllSelected, setIsAllSelected] = useState(false)
+  const [checkboxes, setCheckboxes] = useState({isAllSelected: false, checkboxWords: []})
   const wordState = useSelector(state => state.word)
   const collectionState = useSelector(state => state.collection)
   const currentCollection = useSelector(state => state.currentCollection)
 
   useEffect(() => {
     const words = getWordsByCollectionId(currentCollection.id)
-    setWordsWithCheckbox(words.map(w => ({word: w, isChecked:false})))
-    setIsAllSelected(false)
+    setCheckboxes({isAllSelected: false, checkboxWords: words.map(w => ({word: w, isChecked:false}))})
   }, [currentCollection])
 
   useEffect(() => {
     if (collectionState.type === DELETE_COLLECTION && currentCollection.id === 'default') {
-      setWordsWithCheckbox(prevWordsWithCheckbox => {
+      setCheckboxes(prevCheckboxes => {
         const words = getWordsByCollectionId(currentCollection.id)
-        const wordsMovedToDefault = words.filter(w => !prevWordsWithCheckbox.some(prev => prev.word.id === w.id))
-        const wordsMovedToDefaultWithCheckbox = wordsMovedToDefault.map(w => ({word: w, isChecked:false}))
-        return [...prevWordsWithCheckbox, ...wordsMovedToDefaultWithCheckbox]
+        const wordsMovedToDefault = words.filter(w => !prevCheckboxes.checkboxWords.some(prev => prev.word.id === w.id))
+        if(wordsMovedToDefault.length > 0) {
+          const wordsMovedToDefaultWithCheckbox = wordsMovedToDefault.map(w => ({word: w, isChecked:false}))
+          return {
+            isAllSelected: false,
+            checkboxWords: [...prevCheckboxes.checkboxWords, ...wordsMovedToDefaultWithCheckbox.checkboxWords]          
+          }
+        }
+        return prevCheckboxes
       })
     }
   }, [collectionState, currentCollection.id])
 
   useEffect(() => {
     if (wordState.type === ADD_WORD) {
-      setWordsWithCheckbox(prevWordsWithCheckbox => {
-        const found = prevWordsWithCheckbox.find(w => w.word.value === wordState.word.value)
+      setCheckboxes(prevCheckboxes => {
+        const found = prevCheckboxes.checkboxWords.find(c => c.word.value === wordState.word.value)
         if (found) {
-          return prevWordsWithCheckbox
+          return prevCheckboxes
         }
-      return [{word: wordState.word, isChecked: false}, ...prevWordsWithCheckbox]
+      return {
+        isAllSelected: false,
+        checkboxWords: [{word: wordState.word, isChecked: false}, ...prevCheckboxes.checkboxWords]}
     })
   }
 
     if (wordState.type === DELETE_WORD) {
       deleteWordFromLocalStorage(wordState.word)
-      setWordsWithCheckbox(prevWordsWithCheckbox =>
-        prevWordsWithCheckbox.filter(w => w.word.value !== wordState.word.value))
+      setCheckboxes(prevCheckboxes => {
+        const left = prevCheckboxes.checkboxWords.filter(w => w.word.value !== wordState.word.value)
+        return {
+          isAllSelected: checkIsAllSelected(left),
+          checkboxWords: left
+        }
+      })
     }
 
     if (wordState.type === UPDATE_WORD) {
       if (wordState.word && wordState.word.value) {
-        setWordsWithCheckbox(prevWordsWithCheckbox => {
-          const foundWord = prevWordsWithCheckbox.find(w => w.word.id === wordState.word.id)
+        setCheckboxes(prevCheckboxWords => {
+          const foundWord = prevCheckboxWords.checkboxWords.find(w => w.word.id === wordState.word.id)
           let needToMoveCollection = false
           if (foundWord) {
             foundWord.value = wordState.word.value
@@ -58,9 +73,16 @@ export default function WordList({ setHighlightWord }) {
             }
           }
           if (needToMoveCollection) {
-            return prevWordsWithCheckbox.filter(w => w.word.id !== wordState.word.id)
+            const left = prevCheckboxWords.checkboxWords.filter(w => w.word.id !== wordState.word.id)
+            return {
+              isAllSelected: checkIsAllSelected(left),
+              checkboxWords: left
+            }
           }
-          return [...prevWordsWithCheckbox]
+          return {
+            isAllSelected: prevCheckboxWords.isAllSelected,
+            checkboxWords: [...prevCheckboxWords]
+          }
         })
         updateWordToLocalStorage(wordState.word)
       }
@@ -72,29 +94,17 @@ export default function WordList({ setHighlightWord }) {
     
   }, [setHighlightWord, wordState])
 
-  console.log('wordlist', wordsWithCheckbox);
-  
-
   return (
     <div>
       <ul className={StyleSheet.wordList}>
-        {wordsWithCheckbox.length === 0 ?
+        {checkboxes.checkboxWords.length === 0 ?
         <p><span role="img" aria-label="grinning">😅</span> There is no word in this collection: <em>{currentCollection.name}</em></p> :
         <>
-          <SelectAll
-            isAllSelected={isAllSelected}
-            setIsAllSelected={setIsAllSelected}
-            setWordsWithCheckbox={setWordsWithCheckbox}
-          />
-          {wordsWithCheckbox.map(wordWithCheckbox =>
+          <SelectAll checkboxes={checkboxes} setCheckboxes={setCheckboxes}/>
+          {checkboxes.checkboxWords.map(wordWithCheckbox =>
             wordWithCheckbox.word.value && 
             <li key={wordWithCheckbox.word.id}>
-              <Word 
-                wordWithCheckbox={wordWithCheckbox}
-                wordsWithCheckbox={wordsWithCheckbox}
-                setWordsWithCheckbox={setWordsWithCheckbox}
-                setIsAllSelected={setIsAllSelected}
-            />
+              <Word wordWithCheckbox={wordWithCheckbox} checkboxes={checkboxes} setCheckboxes={setCheckboxes}/>
             </li>)}
         </>
         }
