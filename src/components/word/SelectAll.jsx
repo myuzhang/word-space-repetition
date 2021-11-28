@@ -1,15 +1,20 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import action from '../../store/actions'
 import styles from './Word.module.css'
 import MoveWords from './MoveWordsModal';
 
 export default function SelectAll({checkboxes, setCheckboxes}) {
   const [modalOpen, setModalOpen] = useState(false)
+  const dispatch = useDispatch()
 
   function openModal() {
     setModalOpen(true)
   }
 
-  function handleClick() {
+  function handleChange() {
+    console.log('select all:', checkboxes);
+    
     const newState = !checkboxes.isAllSelected
     setCheckboxes({
       isAllSelected: newState,
@@ -17,12 +22,23 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
     })
   }
 
-  function handleDelete() {}
+  function handleDelete() {
+    const deleteWords = checkboxes.checkboxWords.filter(w => w.isChecked)
+    const deleteCount = deleteWords.length
+    if (deleteCount > 0) {
+      if (window.confirm(`⚠️ Are you sure you want to delete this word:\n${deleteWords.map(c => c.word.value + '\n').join("")}`)) {
+        dispatch(action.deleteWords(deleteWords.map(c => c.word)))
+        dispatch(action.decreaseTotalWordCount(deleteCount))
+        dispatch(action.decreaseTodayWordCount(deleteCount))
+        dispatch(action.decreaseCollectionWordCount(deleteCount))
+      }
+    }
+  }
 
   return (
     <div className={styles.wordContainer}>
       <div className={styles.wordText}>
-        <input type="checkbox" checked={checkboxes.isAllSelected} onClick={handleClick} name="all" id="all"/>
+        <input type="checkbox" checked={checkboxes.isAllSelected} onChange={handleChange} name="all" id="all"/>
         <label className={styles.thick} htmlFor="all">Select All</label>
       </div>
       <div className={styles.padRight}>

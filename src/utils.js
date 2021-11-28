@@ -40,14 +40,12 @@ export const addWordToLocalStorage = word => {
   return false
 }
 
-export const deleteWordFromLocalStorage = word => {
+export const deleteWordsFromLocalStorage = words => {
   const storage = get()
-  if (storage.words.length === 0) {
+  if (storage.words.length === 0 || !words || words.length === 0) {
     return
   }
-console.log(word);
-
-  storage.words = storage.words.filter(w => w.id !== word.id)
+  storage.words = storage.words.filter(sw => !words.some(w => w.id === sw.id))
   save(storage)
 }
 

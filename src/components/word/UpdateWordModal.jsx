@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Modal from 'react-modal'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateWord } from '../../store/actions/wordAction'
+import action from '../../store/actions'
 import className from 'classnames'
 import { getCollections, getDefaultCollection } from '../../utils'
 import styles from './Word.module.css';
@@ -40,7 +40,7 @@ export default function UpdateWordModal(props) {
     if (e.target[0].value) {
       const trimedWord = e.target[0].value.trim()
       if (trimedWord) {
-        dispatch(updateWord({
+        dispatch(action.updateWord({
           id: props.word.id,
           collectionId: e.target[1].value,
           value: trimedWord,

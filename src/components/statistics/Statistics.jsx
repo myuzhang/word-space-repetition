@@ -11,7 +11,7 @@ export default function Statistics() {
 
   useEffect(() => {
     const collectionWordCount = getCollectionWordCount(currentCollection.id)
-    dispatch(action.setCollectionWords(collectionWordCount))
+    dispatch(action.setCollectionWordCount(collectionWordCount))
   }, [currentCollection, dispatch])
 
   const handleSave = () => saveToFile()

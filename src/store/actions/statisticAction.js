@@ -1,37 +1,43 @@
 import {
-  INCREASE_TODAY_WORD,
-  DECREASE_TODAY_WORD,
-  INCREASE_TOTAL_WORD,
-  DECREASE_TOTAL_WORD,
-  INCREASE_COLLECTION_WORD,
-  DECREASE_COLLECTION_WORD,
-  SET_COLLECTION_WORD } from '../../const'
+  INCREASE_TODAY_WORD_COUNT,
+  DECREASE_TODAY_WORD_COUNT,
+  INCREASE_TOTAL_WORD_COUNT,
+  DECREASE_TOTAL_WORD_COUNT,
+  INCREASE_COLLECTION_WORD_COUNT,
+  DECREASE_COLLECTION_WORD_COUNT,
+  SET_COLLECTION_WORD_COUNT } from '../../const'
 
-export const increaseTotalWords = () => ({
-  type: INCREASE_TOTAL_WORD,
+export const increaseTotalWordCount = (number) => ({
+  type: INCREASE_TOTAL_WORD_COUNT,
+  payload: number,
 })
 
-export const decreaseTotalWords = () => ({
-  type: DECREASE_TOTAL_WORD,
+export const decreaseTotalWordCount = (number) => ({
+  type: DECREASE_TOTAL_WORD_COUNT,
+  payload: number,
 })
 
-export const increaseTodayWords = () => ({
-  type: INCREASE_TODAY_WORD,
+export const increaseTodayWordCount = (number) => ({
+  type: INCREASE_TODAY_WORD_COUNT,
+  payload: number,
 })
 
-export const decreaseTodayWords = () => ({
-  type: DECREASE_TODAY_WORD,
+export const decreaseTodayWordCount = (number) => ({
+  type: DECREASE_TODAY_WORD_COUNT,
+  payload: number,
 })
 
-export const increaseCollectionWords = () => ({
-  type: INCREASE_COLLECTION_WORD,
+export const increaseCollectionWordCount = (number) => ({
+  type: INCREASE_COLLECTION_WORD_COUNT,
+  payload: number,
 })
 
-export const decreaseCollectionWords = () => ({
-  type: DECREASE_COLLECTION_WORD,
+export const decreaseCollectionWordCount = (number) => ({
+  type: DECREASE_COLLECTION_WORD_COUNT,
+  payload: number,
 })
 
-export const setCollectionWords = (collectionWordCount) => ({
-  type: SET_COLLECTION_WORD,
+export const setCollectionWordCount = (collectionWordCount) => ({
+  type: SET_COLLECTION_WORD_COUNT,
   payload: collectionWordCount
 })

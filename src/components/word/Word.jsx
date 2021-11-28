@@ -32,9 +32,9 @@ export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
   const handleDelete = () => {
     if (window.confirm(`⚠️ Are you sure you want to delete this word -> ${wordWithCheckbox.word.value}`)) {
       dispatch(action.deleteWord(wordWithCheckbox.word))
-      dispatch(action.decreaseTotalWords())
-      dispatch(action.decreaseTodayWords())
-      dispatch(action.decreaseCollectionWords())
+      dispatch(action.decreaseTotalWordCount(1))
+      dispatch(action.decreaseTodayWordCount(1))
+      dispatch(action.decreaseCollectionWordCount(1))
     }
   }
 
@@ -52,6 +52,8 @@ export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
   }
 
   function handleCheckboxClick() {
+    console.log('word:', setCheckboxes);
+    
     const newState = !wordWithCheckbox.isChecked
     const found = checkboxes.checkboxWords.findIndex(w => w.word.id === wordWithCheckbox.word.id)
     if (found !== -1) {
@@ -68,7 +70,7 @@ export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
   return (
     <div className={styles.wordContainer}>
       <div className={styles.wordText} name={wordWithCheckbox.word.value} ref={hightlight} title="🌏 Click the word to open the meaning by Google in new tab">
-        <input checked={wordWithCheckbox.isChecked} onClick={handleCheckboxClick} type="checkbox" name="word" id="word"/>
+        <input checked={wordWithCheckbox.isChecked} onChange={handleCheckboxClick} type="checkbox" name="word" id="word"/>
         <label htmlFor="word">
           <a href={`https://www.google.com/search?q=${wordWithCheckbox.word.value}+definition`} target="_blank" rel="noopener noreferrer">{wordWithCheckbox.word.value}</a>
         </label>

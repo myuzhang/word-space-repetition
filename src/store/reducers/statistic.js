@@ -1,12 +1,12 @@
 import { getCollectionWordCount, getTodayWordCount, getTotalWordCount} from '../../utils'
 import {
-  INCREASE_TODAY_WORD,
-  DECREASE_TODAY_WORD,
-  SET_COLLECTION_WORD,
-  INCREASE_TOTAL_WORD,
-  DECREASE_TOTAL_WORD,
-  INCREASE_COLLECTION_WORD,
-  DECREASE_COLLECTION_WORD } from '../../const'
+  INCREASE_TODAY_WORD_COUNT,
+  DECREASE_TODAY_WORD_COUNT,
+  SET_COLLECTION_WORD_COUNT,
+  INCREASE_TOTAL_WORD_COUNT,
+  DECREASE_TOTAL_WORD_COUNT,
+  INCREASE_COLLECTION_WORD_COUNT,
+  DECREASE_COLLECTION_WORD_COUNT } from '../../const'
 
 export default function statistics (
   state = {
@@ -15,40 +15,40 @@ export default function statistics (
         totalwordCount: getTotalWordCount()},
     action) {
   switch(action.type) {
-    case INCREASE_COLLECTION_WORD:
+    case INCREASE_COLLECTION_WORD_COUNT:
       return {
         ...state,
-        collectionWordCount: state.collectionWordCount + 1
+        collectionWordCount: state.collectionWordCount + action.payload
       }
-    case DECREASE_COLLECTION_WORD:
+    case DECREASE_COLLECTION_WORD_COUNT:
       return {
         ...state,
-        collectionWordCount: state.collectionWordCount - 1
+        collectionWordCount: state.collectionWordCount - action.payload
       }
-    case SET_COLLECTION_WORD:
+    case SET_COLLECTION_WORD_COUNT:
         return {
           ...state,
           collectionWordCount: action.payload
         } 
-    case INCREASE_TODAY_WORD:
+    case INCREASE_TODAY_WORD_COUNT:
       return {
         ...state,
-        todayWordCount: state.todayWordCount + 1
+        todayWordCount: state.todayWordCount + action.payload
       }    
-    case DECREASE_TODAY_WORD:
+    case DECREASE_TODAY_WORD_COUNT:
       return {
         ...state,
-        todayWordCount: state.todayWordCount - 1
+        todayWordCount: state.todayWordCount - action.payload
       }    
-    case INCREASE_TOTAL_WORD:
+    case INCREASE_TOTAL_WORD_COUNT:
       return {
         ...state,
-        totalwordCount: state.totalwordCount + 1
+        totalwordCount: state.totalwordCount + action.payload
       }    
-    case DECREASE_TOTAL_WORD:
+    case DECREASE_TOTAL_WORD_COUNT:
       return {
         ...state,
-        totalwordCount: state.totalwordCount - 1
+        totalwordCount: state.totalwordCount - action.payload
       }
       default:
         return state
