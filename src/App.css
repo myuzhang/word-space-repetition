@@ -138,27 +138,6 @@ input:focus::placeholder {
   top:1px;
   filter: invert(0.7);
 }
- 
-.content-wrapper {
-  width:100%;
-  display: grid;
-  grid-template-columns: 35% 65%;
-  grid-auto-rows: auto;
-  font-size: 1.5rem;
-}
-
-.content-wrapper ul {
-  list-style: none;
-  padding-left: 0px;
-}
-
-.word-list {
-  height: 95vh;
-  overflow-y: scroll;
-  scrollbar-color: rebeccapurple grey;
-  scrollbar-width: thin;
-  margin: 0;
-}
 
 .scroll-then-fix {
   position: sticky;

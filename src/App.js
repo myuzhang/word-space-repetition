@@ -4,7 +4,7 @@ import Statistics from './components/statistics/Statistics'
 import AddWord from './components/word/AddWord'
 import AddCollection from './components/collection/AddCollection'
 import ListCollection from './components/collection/ListCollection'
-import Dictionary from './components/dictionary/Dictionary'
+import Content from './components/content/Content'
 import Idom from './components/idiom/idiom'
 
 export default function App() {
@@ -17,7 +17,7 @@ export default function App() {
         <AddCollection />
         <ListCollection />
       </div>
-      <Dictionary />
+      <Content />
     </div>
   );
 }
