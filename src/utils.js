@@ -134,6 +134,27 @@ export const moveWordsFromCollectionToDefault = collection => {
   save(storage)
 }
 
+export const moveWordsToCollection = (movingWords, targetCollectionId) => {
+  if (!movingWords || movingWords.length === 0 || !targetCollectionId) {
+    return
+  }
+
+  const storage = get()
+  const { collections, words } = storage
+  const found = collections.find(c => c.id === targetCollectionId)
+  if(found) {
+    storage.words = words.map(w => {
+      const foundWord = movingWords.find(mw => mw.id === w.id)      
+      if(foundWord) {
+        foundWord.collectionId = targetCollectionId
+        return foundWord
+      }
+      return w
+    })
+  }
+  save(storage)
+}
+
 export const addCollectionToLocalStorage = collection => {
   let storage = get()
   if (storage.collections.length === 0) {

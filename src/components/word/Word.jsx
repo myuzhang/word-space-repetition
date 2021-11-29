@@ -52,8 +52,6 @@ export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
   }
 
   function handleCheckboxClick() {
-    console.log('word:', setCheckboxes);
-    
     const newState = !wordWithCheckbox.isChecked
     const found = checkboxes.checkboxWords.findIndex(w => w.word.id === wordWithCheckbox.word.id)
     if (found !== -1) {

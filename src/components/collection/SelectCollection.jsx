@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import action from '../../store/actions'
 import UpdateCollection from './UpdateCollection';
 
-export default function ListCollection({collection, updateCollection, setUpdateCollection, setCurrentCollection}) {
+export default function SelectCollection({collection, updateCollection, setUpdateCollection, setCurrentCollection}) {
   const dispatch = useDispatch()
 
   function selectCollection() {

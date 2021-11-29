@@ -7,7 +7,7 @@ import { getCollections, getDefaultCollection } from '../../utils'
 import styles from './Word.module.css';
 
 export default function UpdateWordModal(props) {
-  var subtitle
+  let subtitle
   const dispatch = useDispatch()
   const [word, setWord] = useState(props.word.value)
   const [collections, setCollections] = useState([getDefaultCollection()])

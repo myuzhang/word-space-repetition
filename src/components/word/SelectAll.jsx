@@ -2,19 +2,21 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import action from '../../store/actions'
 import styles from './Word.module.css'
-import MoveWords from './MoveWordsModal';
+import MoveWordsModal from './MoveWordsModal';
 
 export default function SelectAll({checkboxes, setCheckboxes}) {
   const [modalOpen, setModalOpen] = useState(false)
   const dispatch = useDispatch()
 
   function openModal() {
-    setModalOpen(true)
+    const moveWords = checkboxes.checkboxWords.filter(w => w.isChecked)
+    const moveCount = moveWords.length
+    if (moveCount > 0) {
+      setModalOpen(true)
+    }
   }
 
   function handleChange() {
-    console.log('select all:', checkboxes);
-    
     const newState = !checkboxes.isAllSelected
     setCheckboxes({
       isAllSelected: newState,
@@ -44,7 +46,7 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
       <div className={styles.padRight}>
         <button className={styles.toRight} onClick={handleDelete} title="⚠️ Remove selected word from the collection"><span role="img" aria-label="trash bin">🗑</span></button>
         <button className={styles.toRight} onClick={openModal} title="🖋 Move selected words to another collection"><span role="img" aria-label="gear">✍️</span></button>
-        {modalOpen && <MoveWords />}
+        {modalOpen && <MoveWordsModal modalOpen={modalOpen} setModalOpen={setModalOpen} checkboxes={checkboxes} setCheckboxes={setCheckboxes} />}
       </div>
     </div>
   )
