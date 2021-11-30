@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import action from '../../store/actions'
 import styles from './Word.module.css'
 import MoveWordsModal from './MoveWordsModal';
+import { deleteWordsFromLocalStorage } from '../../utils';
 
 export default function SelectAll({checkboxes, setCheckboxes}) {
   const [modalOpen, setModalOpen] = useState(false)
@@ -28,8 +29,10 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
     const deleteWords = checkboxes.checkboxWords.filter(w => w.isChecked)
     const deleteCount = deleteWords.length
     if (deleteCount > 0) {
-      if (window.confirm(`⚠️ Are you sure you want to delete this word:\n${deleteWords.map(c => c.word.value + '\n').join("")}`)) {
-        dispatch(action.deleteWords(deleteWords.map(c => c.word)))
+      if (window.confirm(`⚠️ Are you sure you want to delete the word(s):\n${deleteWords.map(c => c.word.value + '\n').join("")}`)) {
+        const words = deleteWords.map(c => c.word)
+        deleteWordsFromLocalStorage(words)
+        dispatch(action.deleteWords(words))
         dispatch(action.decreaseTotalWordCount(deleteCount))
         dispatch(action.decreaseTodayWordCount(deleteCount))
         dispatch(action.decreaseCollectionWordCount(deleteCount))

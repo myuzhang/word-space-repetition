@@ -40,6 +40,9 @@ export default function UpdateWordModal(props) {
     if (e.target[0].value) {
       const trimedWord = e.target[0].value.trim()
       if (trimedWord) {
+        if (e.target[1].value !== props.word.collectionId) {
+          dispatch(action.decreaseCollectionWordCount(1))
+        }
         dispatch(action.updateWord({
           id: props.word.id,
           collectionId: e.target[1].value,

@@ -31,7 +31,7 @@ export const addWordToLocalStorage = word => {
     return true
   }
 
-  const found = storage.words.find(w => w.id === word.id)
+  const found = storage.words.find(w => w.value === word.value && w.collectionId === word.collectionId)
   if (!found) {
     storage.words.unshift(word)
     save(storage)
@@ -143,8 +143,8 @@ export const moveWordsToCollection = (movingWords, targetCollectionId) => {
   const { collections, words } = storage
   const found = collections.find(c => c.id === targetCollectionId)
   if(found) {
-    storage.words = words.map(w => {
-      const foundWord = movingWords.find(mw => mw.id === w.id)      
+    storage.words = words.map(w => {      
+      const foundWord = movingWords.find(mw => mw.id === w.id)
       if(foundWord) {
         foundWord.collectionId = targetCollectionId
         return foundWord
@@ -152,6 +152,11 @@ export const moveWordsToCollection = (movingWords, targetCollectionId) => {
       return w
     })
   }
+
+  // dedupe merged words:
+  storage.words = storage.words.filter((word, position) => 
+    words.findIndex(w => w.value === word.value && w.colleciontId === word.colleciontId) === position)
+
   save(storage)
 }
 
