@@ -29,9 +29,9 @@ export default function AddWord() {
         const added = addWordToLocalStorage(newWord)
         if (added) {
           dispatch(action.addWord(newWord))
-          dispatch(action.increaseTotalWordCount())
-          dispatch(action.increaseTodayWordCount())
-          dispatch(action.increaseCollectionWordCount())
+          dispatch(action.increaseTotalWordCount(1))
+          dispatch(action.increaseTodayWordCount(1))
+          dispatch(action.increaseCollectionWordCount(1))
         }
       }
     }

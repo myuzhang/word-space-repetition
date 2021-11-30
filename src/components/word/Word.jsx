@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import action from '../../store/actions'
-import { updateWordDate } from '../../utils'
+import { deleteWordsFromLocalStorage, updateWordDate } from '../../utils'
 import UpdateWordModal from './UpdateWordModal'
 import styles from './Word.module.css'
 
@@ -31,6 +31,7 @@ export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
 
   const handleDelete = () => {
     if (window.confirm(`⚠️ Are you sure you want to delete this word -> ${wordWithCheckbox.word.value}`)) {
+      deleteWordsFromLocalStorage([wordWithCheckbox.word])
       dispatch(action.deleteWord(wordWithCheckbox.word))
       dispatch(action.decreaseTotalWordCount(1))
       dispatch(action.decreaseTodayWordCount(1))
