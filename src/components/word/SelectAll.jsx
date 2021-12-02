@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import action from '../../store/actions'
 import styles from './Word.module.css'
 import MoveWordsModal from './MoveWordsModal';
-import { deleteWordsFromLocalStorage } from '../../utils';
+import { deleteWordsFromLocalStorage, shuffleArray } from '../../utils';
 
 export default function SelectAll({checkboxes, setCheckboxes}) {
   const [modalOpen, setModalOpen] = useState(false)
@@ -40,6 +40,14 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
     }
   }
 
+  function handleShuffle() {
+    const checkboxWords = shuffleArray(checkboxes.checkboxWords)
+    setCheckboxes({
+      isAllSelected: checkboxWords.isAllSelected,
+      checkboxWords
+    })
+  }
+
   return (
     <div className={styles.wordContainer}>
       <div className={styles.wordText}>
@@ -49,6 +57,7 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
       <div className={styles.padRight}>
         <button className={styles.toRight} onClick={handleDelete} title="⚠️ Remove selected word from the collection"><span role="img" aria-label="trash bin">🗑</span></button>
         <button className={styles.toRight} onClick={openModal} title="🖋 Move selected words to another collection"><span role="img" aria-label="gear">✍️</span></button>
+        <button className={styles.toRight} onClick={handleShuffle} title="♼ Shuffle all words from the collection"><span role="img" aria-label="shuffle bin">♼</span></button>
         {modalOpen && <MoveWordsModal modalOpen={modalOpen} setModalOpen={setModalOpen} checkboxes={checkboxes} setCheckboxes={setCheckboxes} />}
       </div>
     </div>
