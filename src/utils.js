@@ -54,6 +54,11 @@ export const updateWordToLocalStorage = word => {
   const { words } = storage
   const foundWord = words.find(w => w.id === word.id)
   if (foundWord) {
+    const duplicatedWordInTheSameCollection = 
+      words.find(w => w.value === word.value && w.collectionId === word.collectionId)
+    if(duplicatedWordInTheSameCollection) {
+      return
+    }
     foundWord.value = word.value
     foundWord.collectionId = word.collectionId
     save(storage)
@@ -95,6 +100,7 @@ export const mergeWordsToLocalStorage = merge => {
     const defaultCollection = storage.collections.find(c => c.name === 'default')
     storage.collections = storage.collections.filter(c => c.name !== 'default')
     storage.collections.push(defaultCollection)
+    storage.collections = sortCollection(storage.collections)
   }
 
   // merge words
@@ -171,6 +177,7 @@ export const addCollectionToLocalStorage = collection => {
   const found = storage.collections.find(c => c.name === collection.name)
   if (!found) {
     storage.collections.unshift(collection)
+    storage.collections = sortCollection(storage.collections)
     save(storage)
     return true
   }
@@ -289,11 +296,10 @@ export const saveToFile = () => {
 
 export const restoreFromFile = (content) => mergeWordsToLocalStorage(JSON.parse(content))
 
-export function save(wordList) {
+export const save = wordList => 
   localStorage.setItem('Eng:Words', JSON.stringify(wordList))
-}
 
-export function get() {
+export const get = () => {
   const storageStream = localStorage.getItem('Eng:Words')
   if (!storageStream) {
     return {words:[], collections:[]}
@@ -309,3 +315,17 @@ export function get() {
   }
   return storage
 }
+
+export const sortCollection = collection => collection.sort((a, b) => {
+  var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+  var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+  if (nameA < nameB) {
+    return -1;
+  }
+  if (nameA > nameB) {
+    return 1;
+  }
+
+  // names must be equal
+  return 0;
+}) 

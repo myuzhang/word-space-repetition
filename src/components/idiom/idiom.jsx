@@ -13,7 +13,7 @@ const Idom = () => {
     <div className="ribbon color">
       <button onClick={handleNext}>New Idiom</button>
       <div>
-        <p className="left-text">Idom: <span className="idiom-value">{idiom.idiom}</span></p>
+        <p className="left-text">Idiom: <span className="idiom-value">{idiom.idiom}</span></p>
         <p className="left-text">Meaning: <span className="idiom-value">{idiom.meanging}</span> 👈 used {idiom.usage}</p>
       </div>
     </div>

@@ -27,6 +27,7 @@ export default function ListCollection() {
       setCurrentCollection(latestCurrent)
     }
     const dropdown = collections.filter(c => c.name !== currentCollection.name)
+    
     setCollections(dropdown)
   }, [collectionState, currentCollection, dispatch])
 

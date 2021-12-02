@@ -8,7 +8,7 @@ export default function DeletionButton({collection}) {
 
   function deleteCollection() {
     if (collection.name === 'default') {
-      window.confirm('⏹ You can\'t remove default collction')
+      window.confirm('⏹ You can\'t remove default collection')
     } else {
       if (window.confirm(`⚠️ Once the ${collection.name} collection has been removed, the words underneath will be moved into default collection`)) {
         moveWordsFromCollectionToDefault(collection)
