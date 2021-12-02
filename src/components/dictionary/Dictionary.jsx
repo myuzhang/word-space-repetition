@@ -8,7 +8,7 @@ const Dictionary = ( {highlightWord} ) => {
   }
 
   return (
-    <div className="scroll-then-fix">
+    <div>
       <div>
         <button className="square-button" value="Merriam" id="Merriam" onClick={handleSelectDict}>Merriam</button>
         <button className="square-button" value="Dictionary" id="Dictionary" onClick={handleSelectDict}>Dictionary</button>

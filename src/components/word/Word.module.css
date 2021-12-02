@@ -11,7 +11,7 @@
 }
 
 .wordList {
-  height: 95vh;
+  height: 90vh;
   overflow-y: scroll;
   scrollbar-color: rebeccapurple grey;
   scrollbar-width: thin;

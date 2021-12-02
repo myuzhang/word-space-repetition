@@ -4,6 +4,8 @@ import { getWordsByCollectionId, deleteWordsFromLocalStorage, updateWordToLocalS
 import {DELETE_COLLECTION} from '../../const'
 import Word from '../word/Word';
 import SelectAll from '../word/SelectAll'
+import styles from './Word.module.css'
+import baseStyles from '../../Base.module.css';
 
 function checkIsAllSelected(checkboxWords) {
   return checkboxWords.every(w => w.isChecked)
@@ -29,7 +31,7 @@ export default function WordList({ setHighlightWord }) {
           const wordsMovedToDefaultWithCheckbox = wordsMovedToDefault.map(w => ({word: w, isChecked:false}))
           return {
             isAllSelected: false,
-            checkboxWords: [...prevCheckboxes.checkboxWords, ...wordsMovedToDefaultWithCheckbox.checkboxWords]          
+            checkboxWords: [...prevCheckboxes.checkboxWords, ...wordsMovedToDefaultWithCheckbox]          
           }
         }
         return prevCheckboxes
@@ -106,20 +108,20 @@ export default function WordList({ setHighlightWord }) {
   }, [setHighlightWord, wordState.highlightWord])
 
   return (
-    <div>
-      <ul className={StyleSheet.wordList}>
-        {checkboxes.checkboxWords.length === 0 ?
+    <div className={baseStyles.scrollThenSticky}>
+      {checkboxes.checkboxWords.length === 0 ?
         <p><span role="img" aria-label="grinning">😅</span> There is no word in this collection: <em>{currentCollection.name}</em></p> :
         <>
           <SelectAll checkboxes={checkboxes} setCheckboxes={setCheckboxes}/>
-          {checkboxes.checkboxWords.map(wordWithCheckbox =>
-            wordWithCheckbox.word.value && 
-            <li key={wordWithCheckbox.word.id}>
-              <Word wordWithCheckbox={wordWithCheckbox} checkboxes={checkboxes} setCheckboxes={setCheckboxes}/>
-            </li>)}
+          <ul className={styles.wordList}>
+            {checkboxes.checkboxWords.map(wordWithCheckbox =>
+              wordWithCheckbox.word.value && 
+              <li key={wordWithCheckbox.word.id}>
+                <Word wordWithCheckbox={wordWithCheckbox} checkboxes={checkboxes} setCheckboxes={setCheckboxes}/>
+              </li>)}
+          </ul>
         </>
-        }
-      </ul>
+      }
     </div>
   )
 }

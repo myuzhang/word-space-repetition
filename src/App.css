@@ -138,8 +138,3 @@ input:focus::placeholder {
   top:1px;
   filter: invert(0.7);
 }
-
-.scroll-then-fix {
-  position: sticky;
-  top: 0;
-}
