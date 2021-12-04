@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { TwitterPicker } from 'react-color'
 import action from '../../store/actions'
 import styles from './Word.module.css'
 import MoveWordsModal from './MoveWordsModal';
@@ -7,6 +8,8 @@ import { deleteWordsFromLocalStorage, shuffleArray } from '../../utils';
 
 export default function SelectAll({checkboxes, setCheckboxes}) {
   const [modalOpen, setModalOpen] = useState(false)
+  const [openPalette, setOpenPalette] = useState(false)
+  const [color, setColor] = useState('#fff')
   const dispatch = useDispatch()
 
   function openModal() {
@@ -21,7 +24,7 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
     const newState = !checkboxes.isAllSelected
     setCheckboxes({
       isAllSelected: newState,
-      checkboxWords: checkboxes.checkboxWords.map(cw => ({word: cw.word, isChecked: newState}))
+      checkboxWords: checkboxes.checkboxWords.map(cw => ({word: cw.word, backgroundColor: cw.backgroundColor, isChecked: newState}))
     })
   }
 
@@ -48,8 +51,41 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
     })
   }
 
-  function handleCount() {
+  function handlePalette() {
+    setOpenPalette(true)
+  }
 
+  function cancelColorPicker() {
+    setOpenPalette(false)
+  }
+
+  function confirmColorPicker() {
+    setOpenPalette(false)
+    setCheckboxes({
+      isAllSelected: checkboxes.isAllSelected,
+      checkboxWords: checkboxes.checkboxWords.map(cw => {
+        if(cw.isChecked) {
+          cw.backgroundColor = color
+        }
+        return cw
+      })
+    })
+  }
+  
+  function resetColorPicker() {
+    setOpenPalette(false)
+    setCheckboxes({
+      isAllSelected: checkboxes.isAllSelected,
+      checkboxWords: checkboxes.checkboxWords.map(cw => {
+        if(cw.isChecked) {
+          cw.backgroundColor = undefined
+        }
+        return cw
+      })
+    })
+  }
+  function changeColor(color) {
+    setColor(color.hex)
   }
 
   function handleGoogleSearch() {
@@ -61,8 +97,6 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
     }
     searchingWords.forEach(w => {
       const newWindow = window.open(`https://www.google.com/search?q=${w.word.value}+definition`, w.word.value, 'noopener,noreferrer')
-      console.log(w.word.value);
-      
       if (newWindow) {
         newWindow.opener = null
       }
@@ -76,7 +110,18 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
         <label className={styles.thick} htmlFor="all">Select All</label>
       </div>
       <div>
-        <button onClick={handleCount} title="🧮 Show the number of selected words from the collection"><span role="img" aria-label="shuffle bin">🧮</span></button>
+      {openPalette && 
+        (
+          <div className={styles.colorPickerContainer} >
+            <TwitterPicker color={color} onChangeComplete={changeColor} />
+            <div className={styles.threeColumns}>
+              <button className={styles.pointButton} onClick={cancelColorPicker}>Cancel</button>
+              <button className={styles.pointButton} onClick={resetColorPicker}>Reset</button>
+              <button className={styles.pointButton} onClick={confirmColorPicker}>Confirm</button>
+            </div>
+          </div>
+        )}
+        <button onClick={handlePalette} title="🎨 Change color for selected words from the collection"><span role="img" aria-label="shuffle bin">🎨</span></button>
         <button onClick={handleGoogleSearch} title="🌏 Explain selected words by Google in new tab from the collection"><span role="img" aria-label="google search">🌐</span></button>
         <button onClick={handleShuffle} title="🔄 Shuffle all words from the collection"><span role="img" aria-label="shuffle bin">🔀</span></button>
         <button onClick={openModal} title="🖋 Move selected words to another collection"><span role="img" aria-label="gear">✍️</span></button>
