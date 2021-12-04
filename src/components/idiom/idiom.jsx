@@ -10,11 +10,11 @@ const Idom = () => {
   }
 
   return (
-    <div className="ribbon color">
-      <button onClick={handleNext}>New Idiom</button>
+    <div className="ribbon">
+      <button onClick={handleNext}><strong>New</strong></button>
       <div>
-        <p className="left-text">Idiom: <span className="idiom-value">{idiom.idiom}</span></p>
-        <p className="left-text">Meaning: <span className="idiom-value">{idiom.meanging}</span> 👈 used {idiom.usage}</p>
+        <p className="left-text">Idiom: <span className="text-green">{idiom.idiom}</span></p>
+        <p className="left-text">Meaning: <span className="text-green">{idiom.meanging}</span> 👈 used {idiom.usage}</p>
       </div>
     </div>
   )

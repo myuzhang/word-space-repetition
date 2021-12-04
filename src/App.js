@@ -6,13 +6,14 @@ import AddCollection from './components/collection/AddCollection'
 import ListCollection from './components/collection/ListCollection'
 import Content from './components/content/Content'
 import Idom from './components/idiom/idiom'
+import styles from './App.module.css'
 
 export default function App() {
   return (
-    <div className="App">
+    <div className={styles.appContainer}>
       <Statistics />
       <Idom />
-      <div className="item-container">
+      <div className={styles.threeColumns}>
         <AddWord />
         <AddCollection />
         <ListCollection />

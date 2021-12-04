@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { addCollection } from '../../store/actions/collectionAction'
 import { addCollectionToLocalStorage } from '../../utils'
 import { nanoid } from 'nanoid'
+import baseStyle from '../../Base.module.css'
 
  export default function AddCollection() {
   const [collection, setCollection] = useState('')
@@ -30,11 +31,11 @@ import { nanoid } from 'nanoid'
   }
 
   return (
-    <div className="bigSpace">
+    <div className={baseStyle.bigSpace}>
       <form onSubmit={handleSubmit}>
         <label htmlFor="newCollection">Add new collection:</label>
-        <input className="input-text" type="text" id="newCollection" value={collection} onChange={handleChange} placeholder="Add collection"/>
-        <input className="round-button" type="submit" value="➕"/>
+        <input className={baseStyle.inputText} type="text" id="newCollection" value={collection} onChange={handleChange} placeholder="Add collection" maxLength="30"/>
+        <input className={baseStyle.roundButton} type="submit" value="➕"/>
       </form>
     </div>
   )

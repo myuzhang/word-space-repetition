@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { nanoid } from 'nanoid'
 import action from '../../store/actions'
 import { addWordToLocalStorage, getDateInDigit, getDefaultCollection } from '../../utils'
+import baseStyle from '../../Base.module.css'
 
 export default function AddWord() {
   const [word, setWord] = useState('')
@@ -43,11 +44,11 @@ export default function AddWord() {
   }, [currentCollection])
 
   return (
-    <div className="bigSpace">
+    <div className={baseStyle.bigSpace}>
       <form onSubmit={handleSubmit}>
         <label htmlFor="addWord">Add new word:</label>
-        <input className="input-text" type="text" id="addWord" value={word} onChange={handleChange} placeholder="Add word"/>
-        <input className="round-button" type="submit" value="➕"/>
+        <input className={baseStyle.inputText} type="text" id="addWord" value={word} onChange={handleChange} placeholder="Add word" maxLength="30"/>
+        <input className={baseStyle.roundButton} type="submit" value="➕"/>
       </form>
     </div>
   )

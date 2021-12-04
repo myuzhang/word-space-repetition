@@ -15,6 +15,6 @@ test('renders learn react link', () => {
       <App />
     </Provider>
   </React.StrictMode>);
-  const button = getByText(/New Idiom/i);
+  const button = getByText(/New/i);
   expect(button).toBeInTheDocument();
 });

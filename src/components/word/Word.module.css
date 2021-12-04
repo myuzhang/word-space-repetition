@@ -1,7 +1,5 @@
 .wordContainer {
-  display: grid;
-  grid-template-columns: 70% 30%;
-  grid-auto-rows: auto;
+  display: flex;
 }
 
 .wordContainer .thick {
@@ -22,6 +20,7 @@
   border-bottom: 1px dashed;
   box-sizing: border-box;
   text-align: left;
+  flex-grow: 1;
 }
 
 li .wordText { background-color: lightgray; }

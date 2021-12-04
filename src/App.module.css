@@ -1,0 +1,10 @@
+.appContainer {
+  margin: 1% 1%;
+}
+
+.threeColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  grid-auto-rows: auto;
+  height: 12vh;
+}

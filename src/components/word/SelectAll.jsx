@@ -48,16 +48,34 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
     })
   }
 
+  function handleCount() {
+
+  }
+
+  function handleGoogleSearch() {
+    const searchingWords = checkboxes.checkboxWords.filter(w => w.isChecked)
+    searchingWords.forEach(w => {
+      const newWindow = window.open(`https://www.google.com/search?q=${w.word.value}+definition`, w.word.value, 'noopener,noreferrer')
+      console.log(w.word.value);
+      
+      if (newWindow) {
+        newWindow.opener = null
+      }
+    });
+  }
+
   return (
     <div className={styles.wordContainer}>
       <div className={styles.wordText}>
         <input type="checkbox" checked={checkboxes.isAllSelected} onChange={handleChange} name="all" id="all"/>
         <label className={styles.thick} htmlFor="all">Select All</label>
       </div>
-      <div className={styles.padRight}>
-        <button className={styles.toRight} onClick={handleDelete} title="⚠️ Remove selected word from the collection"><span role="img" aria-label="trash bin">🗑</span></button>
-        <button className={styles.toRight} onClick={openModal} title="🖋 Move selected words to another collection"><span role="img" aria-label="gear">✍️</span></button>
-        <button className={styles.toRight} onClick={handleShuffle} title="♼ Shuffle all words from the collection"><span role="img" aria-label="shuffle bin">♼</span></button>
+      <div>
+        <button onClick={handleCount} title="🧮 Show the number of selected words from the collection"><span role="img" aria-label="shuffle bin">🧮</span></button>
+        <button onClick={handleGoogleSearch} title="🌏 Explain selected words by Google in new tab from the collection"><span role="img" aria-label="google search">🌐</span></button>
+        <button onClick={handleShuffle} title="🔄 Shuffle all words from the collection"><span role="img" aria-label="shuffle bin">🔀</span></button>
+        <button onClick={openModal} title="🖋 Move selected words to another collection"><span role="img" aria-label="gear">✍️</span></button>
+        <button onClick={handleDelete} title="⚠️ Remove selected word from the collection"><span role="img" aria-label="trash bin">🗑</span></button>
         {modalOpen && <MoveWordsModal modalOpen={modalOpen} setModalOpen={setModalOpen} checkboxes={checkboxes} setCheckboxes={setCheckboxes} />}
       </div>
     </div>
