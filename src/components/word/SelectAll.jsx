@@ -54,6 +54,11 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
 
   function handleGoogleSearch() {
     const searchingWords = checkboxes.checkboxWords.filter(w => w.isChecked)
+    if(searchingWords.length > 5) {
+      if (!window.confirm(`👻 This will open ${searchingWords.length} new tabs to explain words via Google.\n\nAre you sure you want to open all of them?`)) {
+        return
+      }
+    }
     searchingWords.forEach(w => {
       const newWindow = window.open(`https://www.google.com/search?q=${w.word.value}+definition`, w.word.value, 'noopener,noreferrer')
       console.log(w.word.value);
@@ -61,7 +66,7 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
       if (newWindow) {
         newWindow.opener = null
       }
-    });
+    })
   }
 
   return (
