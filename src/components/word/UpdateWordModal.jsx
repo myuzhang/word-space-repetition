@@ -3,7 +3,7 @@ import Modal from 'react-modal'
 import { useDispatch, useSelector } from 'react-redux'
 import action from '../../store/actions'
 import className from 'classnames'
-import { getCollections, getDefaultCollection } from '../../utils'
+import { getCollections, getCurrentCollection } from '../../utils'
 import styles from './Word.module.css';
 import { INPUT_MAX_LENGTH } from '../../const';
 
@@ -11,7 +11,7 @@ export default function UpdateWordModal(props) {
   let subtitle
   const dispatch = useDispatch()
   const [word, setWord] = useState(props.word.value)
-  const [collections, setCollections] = useState([getDefaultCollection()])
+  const [collections, setCollections] = useState([getCurrentCollection()])
   const [selectCollection, setSelectCollection] = useState(props.word.collectionId)
   const collectionState = useSelector(state => state.collection)
 

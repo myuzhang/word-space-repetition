@@ -42,30 +42,30 @@ li:nth-child(odd) .wordText:hover {
 
 .modalContainer {
   margin: auto;
-  width: 20%;
+  width: 30%;
   padding-top: 10px;
   padding-bottom: 20px;
   background-color: papayawhip;
 }
 
 .modalContainer h2 {
-  margin-left: 20px;
+  margin-left: 5%;
 }
 
 .modalContainer form {
   position: relative;
-  margin-left: 20px;
+  margin-left: 5%;
   font-size: larger;
 }
 
 .modalContainer label,
 .modalContainer select {
-  margin: 10px;
+  margin: 2%;
   display: block;
 }
 
 .modalContainer .inputUpdate {
-  margin: 10px;
+  margin: 2%;
   font-size: 1.5rem;
   border: 0;
   outline: 0;

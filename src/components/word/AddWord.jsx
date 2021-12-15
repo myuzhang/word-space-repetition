@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { nanoid } from 'nanoid'
 import action from '../../store/actions'
-import { addWordToLocalStorage, getDateInDigit, getDefaultCollection } from '../../utils'
+import { addWordToLocalStorage, getDateInDigit, getCurrentCollection } from '../../utils'
 import baseStyle from '../../Base.module.css'
 import { INPUT_MAX_LENGTH } from '../../const';
 
 export default function AddWord() {
   const [word, setWord] = useState('')
-  const [collection, setCollection] = useState(getDefaultCollection())
+  const [collection, setCollection] = useState(getCurrentCollection())
   const currentCollection = useSelector(state => state.currentCollection)
   const dispatch = useDispatch()
 

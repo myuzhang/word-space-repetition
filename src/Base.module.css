@@ -1,3 +1,7 @@
+a:link {
+  text-decoration: none;
+}
+
 .bigSapce {
   margin: 10px 0;
   height: 40px;
@@ -39,7 +43,6 @@
 
 .tooltip {
   position:relative; /* making the .tooltip span a container for the tooltip text */
-  border-bottom:1px dashed #000; /* little indicater to indicate it's hoverable */
 }
 
 .tooltip::before {

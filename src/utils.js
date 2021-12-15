@@ -23,7 +23,7 @@ export const setCurrentCollectionById = collectionId => {
   }
 }
 
-export const initStorage = () => addCollectionToLocalStorage(getDefaultCollection())
+export const initStorage = () => addCollectionToLocalStorage(getCurrentCollection())
 
 export const getWords = () => get().words
 
@@ -156,7 +156,7 @@ export const mergeWordsToLocalStorage = merge => {
 export const moveWordsFromCollectionToDefault = collection => {
   const storage = get()
   if (storage.collections.length === 0) {
-    storage.collections = [getDefaultCollection()]
+    storage.collections = [getCurrentCollection()]
   }
   const { words } = storage
   if (words.length !== 0) {
@@ -238,7 +238,7 @@ export const deleteCollectionFromLocalStorage = collection => {
   if (needDefault) {
     const found = storage.collections.find(c => c.id === 'default')
     if (!found) {
-      storage.collections.push(getDefaultCollection())
+      storage.collections.push(getCurrentCollection())
     }
   }
   save(storage)
@@ -366,7 +366,7 @@ export const save = storage =>
 export const get = () => {
   const storageStream = localStorage.getItem('Eng:Words')
   if (!storageStream) {
-    return {words:[], collections:[]}
+    return {currentCollectionId: 'default', words:[], collections:[getDefaultCollection()]}
   }
 
   const storage = JSON.parse(storageStream)
@@ -375,7 +375,7 @@ export const get = () => {
     storage.words = []
   }
   if (!storage.collections) {
-    storage.collections = []
+    storage.collections = [getDefaultCollection()]
   }
   if (!storage.currentCollectionId) {
     storage.currentCollectionId = 'default'

@@ -3,14 +3,14 @@ import Modal from 'react-modal'
 import { useDispatch, useSelector } from 'react-redux'
 import className from 'classnames'
 import action from '../../store/actions'
-import { getCollections, getDefaultCollection, moveWordsToCollection } from '../../utils'
+import { getCollections, getCurrentCollection, moveWordsToCollection } from '../../utils'
 import styles from './Word.module.css'
 
 export default function MoveWordsModal({modalOpen, setModalOpen, checkboxes, setCheckboxes}) {
   let subtitle
   const dispatch = useDispatch()
   const [selectCollection, setSelectCollection] = useState('')
-  const [collections, setCollections] = useState([getDefaultCollection()])
+  const [collections, setCollections] = useState([getCurrentCollection()])
   const collectionState = useSelector(state => state.collection)
 
   useEffect(() => {

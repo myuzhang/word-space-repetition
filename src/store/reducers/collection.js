@@ -1,7 +1,7 @@
 import {ADD_COLLECTION, DELETE_COLLECTION, UPDATE_COLLECTION, CHOOSE_COLLECTION} from '../../const'
-import { getDefaultCollection } from '../../utils'
+import { getCurrentCollection } from '../../utils'
 
-export function collection(state = {type:'', collection: getDefaultCollection()}, action) {
+export function collection(state = {type:'', collection: getCurrentCollection()}, action) {
   switch(action.type) {
     case ADD_COLLECTION:
       return {
@@ -23,7 +23,7 @@ export function collection(state = {type:'', collection: getDefaultCollection()}
   }
 }
 
-export function currentCollection(state = getDefaultCollection(), action) {
+export function currentCollection(state = getCurrentCollection(), action) {
   switch(action.type) {
     case CHOOSE_COLLECTION:
       return {...action.payload}
