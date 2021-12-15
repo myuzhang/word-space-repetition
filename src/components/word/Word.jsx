@@ -1,13 +1,13 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import action from '../../store/actions'
-import { deleteWordsFromLocalStorage, updateWordDate } from '../../utils'
+import { deleteWordsFromLocalStorage, isConfirmedToday, updateWordDate } from '../../utils'
 import UpdateWordModal from './UpdateWordModal'
 import styles from './Word.module.css'
 
 export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
   const dispatch = useDispatch()
-  const [confirm, setConfirm] = useState('🎯')
+  const [confirm, setConfirm] = useState(isConfirmedToday(wordWithCheckbox.word) ? '👍' : '🎯')
   const [again, setAgain] = useState('⏰')
   const [modalOpen, setModalOpen] = useState(false)
 
@@ -34,7 +34,6 @@ export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
       deleteWordsFromLocalStorage([wordWithCheckbox.word])
       dispatch(action.deleteWord(wordWithCheckbox.word))
       dispatch(action.decreaseTotalWordCount(1))
-      dispatch(action.decreaseTodayWordCount(1))
       dispatch(action.decreaseCollectionWordCount(1))
     }
   }

@@ -1,3 +1,7 @@
+const trackingDates = [0, 1, 2, 3, 5, 8, 13, 21]
+
+const maxTrack = trackingDates.length
+
 export const getTodayWordCount = () => getTodayWords().length
 
 export const getTotalWordCount = () => getWords().length
@@ -16,10 +20,24 @@ export const getWordsByCollectionId = collectionId =>
 export const getTodayWords = () => {
   const words = getWords()
   const todayDigit = getDateInDigit()
-  const todayWords = words.filter(word => word.date <= todayDigit)
+  const todayWords = words.filter(word => 
+    (word.count < maxTrack && word.date + trackingDates[word.count] <= todayDigit)
+    || !word.lastVisit || word.lastVisit === todayDigit)
   
   return todayWords
 }
+
+export const getTodayWordsByCollectionId = collectionId => {
+  const words = getWordsByCollectionId(collectionId)
+  const todayDigit = getDateInDigit()
+  const todayWords = words.filter(word => 
+    (word.count < maxTrack && word.date + trackingDates[word.count] <= todayDigit)
+    || !word.lastVisit || word.lastVisit === todayDigit)
+  
+  return todayWords
+}
+
+export const getRecallWords = () => getWords().filter(w => w.count >= maxTrack)
 
 export const getCollections = () => get().collections
 
@@ -260,6 +278,23 @@ export const getDateInDigit = (shiftDays = 0) => {
   return parseInt(`${today.getFullYear()}${monthLeadingZero}${dateLeadingZero}`, 10)
 }
 
+export const isConfirmedToday = word => {
+  const storage  = get()
+  const { words } = storage
+
+  if (words.length === 0) {
+    return false
+  }
+
+  const foundWord = words.find(w => w.id === word.id)
+  if (!foundWord) {
+    return false
+  }
+  
+  return foundWord.date + trackingDates[foundWord.count] > getDateInDigit()
+}
+
+
 export const updateWordDate = (word, increase) => {
   const storage  = get()
   const { words } = storage
@@ -268,12 +303,18 @@ export const updateWordDate = (word, increase) => {
     return
   }
 
-  const foundWord = words.find(w => w.value === word.value)
-  foundWord.date = foundWord.count > 7 ? getDateInDigit(45) : getDateInDigit(foundWord.count)
+  const foundWord = words.find(w => w.id === word.id)
   if (foundWord) {
+    const todayDigit = getDateInDigit()
+    foundWord.lastVisit = todayDigit
     if (increase) {
-      if (foundWord.count <= 7) {
-        foundWord.count += 1
+      if (foundWord.count < maxTrack) {
+        const newCount = foundWord.count + 1
+        if (foundWord.date + trackingDates[newCount] < todayDigit) {
+          foundWord.date = todayDigit
+        } else {
+          foundWord.count = newCount
+        }
       }
     } else {
       if (foundWord.count > 0) {

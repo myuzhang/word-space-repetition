@@ -5,6 +5,7 @@ import action from '../../store/actions'
 import className from 'classnames'
 import { getCollections, getDefaultCollection } from '../../utils'
 import styles from './Word.module.css';
+import { INPUT_MAX_LENGTH } from '../../const';
 
 export default function UpdateWordModal(props) {
   let subtitle
@@ -70,7 +71,7 @@ export default function UpdateWordModal(props) {
       <h2 ref={_subtitle => (subtitle = _subtitle)}>Edit your word:</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="updateWord">Original Word <span role="img" aria-label="writing hand">✍️</span>:</label>
-        <input className={styles.inputUpdate} type="text" id="updateWord" value={word} onChange={handleChange}/>
+        <input className={styles.inputUpdate} type="text" id="updateWord" value={word} onChange={handleChange} maxLength={INPUT_MAX_LENGTH}/>
         <select name="collections" id="collections" onChange={handleSelectCollection} value={selectCollection}>
           {collections && collections.length > 0 && collections.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
         </select>

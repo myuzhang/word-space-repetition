@@ -4,6 +4,7 @@ import { addCollection } from '../../store/actions/collectionAction'
 import { addCollectionToLocalStorage } from '../../utils'
 import { nanoid } from 'nanoid'
 import baseStyle from '../../Base.module.css'
+import { INPUT_MAX_LENGTH } from '../../const';
 
  export default function AddCollection() {
   const [collection, setCollection] = useState('')
@@ -34,7 +35,7 @@ import baseStyle from '../../Base.module.css'
     <div className={baseStyle.bigSpace}>
       <form onSubmit={handleSubmit}>
         <label htmlFor="newCollection">Add new collection:</label>
-        <input className={baseStyle.inputText} type="text" id="newCollection" value={collection} onChange={handleChange} placeholder="Add collection" maxLength="30"/>
+        <input className={baseStyle.inputText} type="text" id="newCollection" value={collection} onChange={handleChange} placeholder="Add collection" maxLength={INPUT_MAX_LENGTH}/>
         <input className={baseStyle.roundButton} type="submit" value="➕"/>
       </form>
     </div>

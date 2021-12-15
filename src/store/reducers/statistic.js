@@ -1,7 +1,5 @@
-import { getCollectionWordCount, getTodayWordCount, getTotalWordCount} from '../../utils'
+import { getCollectionWordCount, getTotalWordCount} from '../../utils'
 import {
-  INCREASE_TODAY_WORD_COUNT,
-  DECREASE_TODAY_WORD_COUNT,
   SET_COLLECTION_WORD_COUNT,
   INCREASE_TOTAL_WORD_COUNT,
   DECREASE_TOTAL_WORD_COUNT,
@@ -11,7 +9,6 @@ import {
 export default function statistics (
   state = {
         collectionWordCount: getCollectionWordCount('default'),
-        todayWordCount: getTodayWordCount(),
         totalwordCount: getTotalWordCount()},
     action) {
   switch(action.type) {
@@ -29,17 +26,7 @@ export default function statistics (
         return {
           ...state,
           collectionWordCount: action.payload
-        } 
-    case INCREASE_TODAY_WORD_COUNT:
-      return {
-        ...state,
-        todayWordCount: state.todayWordCount + action.payload
-      }    
-    case DECREASE_TODAY_WORD_COUNT:
-      return {
-        ...state,
-        todayWordCount: state.todayWordCount - action.payload
-      }    
+        }   
     case INCREASE_TOTAL_WORD_COUNT:
       return {
         ...state,

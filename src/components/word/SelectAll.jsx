@@ -37,7 +37,6 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
         deleteWordsFromLocalStorage(words)
         dispatch(action.deleteWords(words))
         dispatch(action.decreaseTotalWordCount(deleteCount))
-        dispatch(action.decreaseTodayWordCount(deleteCount))
         dispatch(action.decreaseCollectionWordCount(deleteCount))
       }
     }

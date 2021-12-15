@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid'
 import action from '../../store/actions'
 import { addWordToLocalStorage, getDateInDigit, getDefaultCollection } from '../../utils'
 import baseStyle from '../../Base.module.css'
+import { INPUT_MAX_LENGTH } from '../../const';
 
 export default function AddWord() {
   const [word, setWord] = useState('')
@@ -31,7 +32,6 @@ export default function AddWord() {
         if (added) {
           dispatch(action.addWord(newWord))
           dispatch(action.increaseTotalWordCount(1))
-          dispatch(action.increaseTodayWordCount(1))
           dispatch(action.increaseCollectionWordCount(1))
         }
       }
@@ -47,7 +47,7 @@ export default function AddWord() {
     <div className={baseStyle.bigSpace}>
       <form onSubmit={handleSubmit}>
         <label htmlFor="addWord">Add new word:</label>
-        <input className={baseStyle.inputText} type="text" id="addWord" value={word} onChange={handleChange} placeholder="Add word" maxLength="30"/>
+        <input className={baseStyle.inputText} type="text" id="addWord" value={word} onChange={handleChange} placeholder="Add word" maxLength={INPUT_MAX_LENGTH}/>
         <input className={baseStyle.roundButton} type="submit" value="➕"/>
       </form>
     </div>

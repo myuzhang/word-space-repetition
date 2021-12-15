@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import action from '../../store/actions';
 import { updateCollectionToLocalStorage } from '../../utils';
+import { INPUT_MAX_LENGTH } from '../../const';
 
 export default function UpdateCollection({collection, setUpdateCollection}) {
   const [collenctionName, setCollectionName] = useState(collection.name)
@@ -28,5 +29,5 @@ export default function UpdateCollection({collection, setUpdateCollection}) {
     dispatch(action.updateCollection(updatedCollection))
   }
 
-  return <input type="text" value={collenctionName} title="👉Press enter to confirm👈🏿" onChange={handleChange} onKeyDown={onKeyDown} onBlur={onBlur}></input>
+  return <input type="text" value={collenctionName} title="👉Press enter to confirm👈🏿" onChange={handleChange} onKeyDown={onKeyDown} onBlur={onBlur} maxLength={INPUT_MAX_LENGTH}></input>
 }

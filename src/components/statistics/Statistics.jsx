@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCollectionWordCount, restoreFromFile, saveToFile } from '../../utils';
+import { getCollectionWordCount, getRecallWords, restoreFromFile, saveToFile } from '../../utils';
 import styles from './Statistics.module.css'
 import action from '../../store/actions'
 
 export default function Statistics() {
   const statistics = useSelector(state => state.statistics)
   const currentCollection = useSelector(state => state.currentCollection)
+  const recallButton = useRef(null)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -33,12 +34,23 @@ export default function Statistics() {
     }
   }
 
+  function handleRecall(event) {
+    const text = recallButton.current.innerText
+    if (text.includes('Recall Words')) {
+      recallButton.current.innerText = 'Back to Collection'
+      dispatch(action.displayRecallWords())
+    } else {
+      recallButton.current.innerText = `Recall Words: ${getRecallWords().length}`
+      dispatch(action.hideRecallWords())
+    }
+  }
+
   return (
     <>
       <div className={styles.statWrapper}>
         <p className={styles.compactLine}>Total Words: <strong> {statistics.totalwordCount || '⏰'}</strong></p>
         <p className={styles.compactLine}>Collection Words: <strong>{statistics.collectionWordCount || '⏰'}</strong></p>
-        <p className={styles.compactLine}>Today Words: <strong> {statistics.todayWordCount || '⏰'}</strong></p>
+        <button className={styles.compactLine} onClick={handleRecall} ref={recallButton}>Recall Words: {getRecallWords().length}</button>
         <div className={styles.fileAction}>
           <button onClick={handleSave}>Download My Words</button>
           <div className={styles.verticalSeparate}></div>

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { getWordsByCollectionId, deleteWordsFromLocalStorage, updateWordToLocalStorage } from '../../utils'
+import { getTodayWordsByCollectionId, deleteWordsFromLocalStorage, getRecallWords, updateWordToLocalStorage } from '../../utils'
 import {DELETE_COLLECTION} from '../../const'
 import Word from '../word/Word';
 import SelectAll from '../word/SelectAll'
 import styles from './Word.module.css'
 import baseStyles from '../../Base.module.css';
+import WordRecall from './WordRecall';
 
 function checkIsAllSelected(checkboxWords) {
   return checkboxWords.every(w => w.isChecked)
@@ -16,16 +17,17 @@ export default function WordList({ setHighlightWord }) {
   const wordState = useSelector(state => state.word)
   const collectionState = useSelector(state => state.collection)
   const currentCollection = useSelector(state => state.currentCollection)
+  const isInRecall = useSelector(state => state.recall)
 
   useEffect(() => {
-    const words = getWordsByCollectionId(currentCollection.id)
+    const words = getTodayWordsByCollectionId(currentCollection.id)
     setCheckboxes({isAllSelected: false, checkboxWords: words.map(w => ({word: w, isChecked:false}))})
   }, [currentCollection])
 
   useEffect(() => {
     if (collectionState.type === DELETE_COLLECTION && currentCollection.id === 'default') {
       setCheckboxes(prevCheckboxes => {
-        const words = getWordsByCollectionId(currentCollection.id)
+        const words = getTodayWordsByCollectionId(currentCollection.id)
         const wordsMovedToDefault = words.filter(w => !prevCheckboxes.checkboxWords.some(prev => prev.word.id === w.id))
         if(wordsMovedToDefault.length > 0) {
           const wordsMovedToDefaultWithCheckbox = wordsMovedToDefault.map(w => ({word: w, isChecked:false}))
@@ -109,18 +111,29 @@ export default function WordList({ setHighlightWord }) {
 
   return (
     <div className={baseStyles.scrollThenSticky}>
-      {checkboxes.checkboxWords.length === 0 ?
-        <p><span role="img" aria-label="grinning">😅</span> There is no word in this collection: <em>{currentCollection.name}</em></p> :
-        <>
-          <SelectAll checkboxes={checkboxes} setCheckboxes={setCheckboxes}/>
-          <ul className={styles.wordList}>
-            {checkboxes.checkboxWords.map(wordWithCheckbox =>
-              wordWithCheckbox.word.value && 
-              <li key={wordWithCheckbox.word.id}>
-                <Word wordWithCheckbox={wordWithCheckbox} checkboxes={checkboxes} setCheckboxes={setCheckboxes}/>
-              </li>)}
-          </ul>
-        </>
+      { isInRecall ?
+          getRecallWords().length === 0 ?
+            <p><span role="img" aria-label="grinning">😅</span> There is no word to recall</p> :
+              <ul className={styles.wordList}>
+                {getRecallWords().map(word =>
+                  word.value && 
+                  <li key={word.id}>
+                    <WordRecall word={word} />
+                  </li>)}
+              </ul>
+          :
+            checkboxes.checkboxWords.length === 0 ?
+              <p><span role="img" aria-label="grinning">😅</span> There is no word in this collection: <em>{currentCollection.name}</em></p> :
+              <>
+                <SelectAll checkboxes={checkboxes} setCheckboxes={setCheckboxes}/>
+                <ul className={styles.wordList}>
+                  {checkboxes.checkboxWords.map(wordWithCheckbox =>
+                    wordWithCheckbox.word.value && 
+                    <li key={wordWithCheckbox.word.id}>
+                      <Word wordWithCheckbox={wordWithCheckbox} checkboxes={checkboxes} setCheckboxes={setCheckboxes}/>
+                    </li>)}
+                </ul>
+              </>
       }
     </div>
   )
