@@ -7,6 +7,7 @@ import SelectAll from '../word/SelectAll'
 import styles from './Word.module.css'
 import baseStyles from '../../Base.module.css';
 import WordRecall from './WordRecall';
+import AddWordInline from './AddWordInline';
 
 function checkIsAllSelected(checkboxWords) {
   return checkboxWords.every(w => w.isChecked)
@@ -132,6 +133,9 @@ export default function WordList({ setHighlightWord }) {
                     <li key={wordWithCheckbox.word.id}>
                       <Word wordWithCheckbox={wordWithCheckbox} checkboxes={checkboxes} setCheckboxes={setCheckboxes}/>
                     </li>)}
+                  <li key="addWordInline">
+                    <AddWordInline />
+                  </li>
                 </ul>
               </>
       }
