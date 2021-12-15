@@ -278,6 +278,14 @@ export const getDateInDigit = (shiftDays = 0) => {
   return parseInt(`${today.getFullYear()}${monthLeadingZero}${dateLeadingZero}`, 10)
 }
 
+export const getDateInString = dateInNumber => {
+  const year = `${dateInNumber}`.substring(0, 4)
+  const month = `${dateInNumber}`.substring(4, 6)
+  const day = `${dateInNumber}`.substring(6, 8)
+  const date = new Date(`${year}-${month}-${day}`)
+  return date.toDateString()
+}
+
 export const isConfirmedToday = word => {
   const storage  = get()
   const { words } = storage

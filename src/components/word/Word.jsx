@@ -1,9 +1,10 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import action from '../../store/actions'
-import { deleteWordsFromLocalStorage, isConfirmedToday, updateWordDate } from '../../utils'
+import { deleteWordsFromLocalStorage, getDateInString, isConfirmedToday, updateWordDate } from '../../utils'
 import UpdateWordModal from './UpdateWordModal'
 import styles from './Word.module.css'
+import baseStyles from '../../Base.module.css';
 
 export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
   const dispatch = useDispatch()
@@ -68,8 +69,8 @@ export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
     <div className={styles.wordContainer}>
       <div className={styles.wordText} name={wordWithCheckbox.word.value} ref={hightlight} style={{backgroundColor: wordWithCheckbox.backgroundColor || ""}} title="🌏 Click the word to open the meaning by Google in new tab">
         <input checked={wordWithCheckbox.isChecked} onChange={handleCheckboxClick} type="checkbox" name="word" id="word"/>
-        <label htmlFor="word">
-          <a href={`https://www.google.com/search?q=${wordWithCheckbox.word.value}+definition`} target="_blank" rel="noopener noreferrer">{wordWithCheckbox.word.value}</a>
+        <label className={baseStyles.absolutePosition} htmlFor="word">
+          <a className={wordWithCheckbox.word.lastVisit ? baseStyles.tooltip: {}} data-text={`Last time you marked the word as remembered is: ${getDateInString(wordWithCheckbox.word.lastVisit)}`} href={`https://www.google.com/search?q=${wordWithCheckbox.word.value}+definition`} target="_blank" rel="noopener noreferrer">{wordWithCheckbox.word.value}</a>
         </label>
       </div>
       <div>
