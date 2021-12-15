@@ -12,6 +12,11 @@ a:link {
   top: 0;
 }
 
+.scrollThenStickyBottom {
+  position: sticky;
+  bottom: 0;
+}
+
 .bigSpace {
   margin-top: 1vh;
   margin-bottom: 1vh;

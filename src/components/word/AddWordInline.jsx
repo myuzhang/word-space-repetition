@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { nanoid } from 'nanoid'
+import className from 'classnames'
 import action from '../../store/actions'
 import { addWordToLocalStorage, getDateInDigit, getCurrentCollection } from '../../utils'
 import baseStyle from '../../Base.module.css'
@@ -44,7 +45,7 @@ export default function AddWordInline() {
   }, [currentCollection])
 
   return (
-    <div className={baseStyle.bigSpace}>
+    <div className={className(baseStyle.bigSpace, baseStyle.scrollThenStickyBottom)}>
       <form onSubmit={handleSubmit}>
         <input className={baseStyle.inputText} type="text" id="addWordInline" value={word} onChange={handleChange} placeholder="Add word here" maxLength={INPUT_MAX_LENGTH}/>
       </form>

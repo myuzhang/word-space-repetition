@@ -9,22 +9,15 @@ import baseStyles from '../../Base.module.css';
 export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
   const dispatch = useDispatch()
   const [confirm, setConfirm] = useState(isConfirmedToday(wordWithCheckbox.word) ? '👍' : '🎯')
-  const [again, setAgain] = useState('⏰')
   const [modalOpen, setModalOpen] = useState(false)
 
   const hightlight = useRef('');
 
-  const handleConfirm = () => {
+  const handleToggle = () => {
     if (confirm !== '👍') {
       setConfirm('👍')
-      setAgain('⏰')
       updateWordDate(wordWithCheckbox.word, true)
-    }
-  }
-
-  const handleAgain = () => {
-    if (again !== '🛑') {
-      setAgain('🛑')
+    } else {
       setConfirm('🎯')
       updateWordDate(wordWithCheckbox.word, false)
     }
@@ -75,8 +68,7 @@ export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
       </div>
       <div>
         <button onClick={handleHighlightWord} title="📓 Show meaning in the dictionary"><span role="img" aria-label="red textbook">📕</span></button>
-        <button onClick={handleConfirm} title="🧠 Click on it if you can know the meaning and it won't show after you click 7 times on another day"><span role="img" aria-label="thumbs up">{confirm}</span></button>
-        <button onClick={handleAgain} title="⏳ Click on it if you don't know the meaning and the word will still stay in the list"><span role="img" aria-label="thinking face">{again}</span></button>
+        <button onClick={handleToggle} title="🧠 Click on it if you can remember the word and it won't display after you click 7 times on different day"><span role="img" aria-label="thumbs up">{confirm}</span></button>
         <button onClick={openModal} title="🖋 Modify the word"><span role="img" aria-label="gear">✍️</span></button>
         {modalOpen && <UpdateWordModal word={wordWithCheckbox.word} modalOpen={modalOpen} setModalOpen={setModalOpen}/>}
         <button onClick={handleDelete} title="⚠️ Remove the word from the list"><span role="img" aria-label="trash bin">🗑</span></button>
