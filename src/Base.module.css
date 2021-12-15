@@ -3,10 +3,6 @@
   height: 40px;
 }
 
-.absolutePosition {
-  position: absolute;
-}
-
 .scrollThenSticky {
   position: sticky;
   top: 0;
@@ -52,7 +48,7 @@
   
   /* vertically center */
   top:50%;
-  transform:translateY(-50%);
+  transform:translateY(-25%);
   
   /* move to right */
   left:100%;

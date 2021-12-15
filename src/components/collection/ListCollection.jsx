@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import className from 'classnames'
 import styles from './Collection.module.css'
 import baseStyles from '../../Base.module.css'
-import { getCollections, getDefaultCollection } from '../../utils'
+import { getCollections, getCurrentCollection } from '../../utils'
 import action from '../../store/actions'
 import DeleteButton from './DeleteButton'
 import Updatebutton from './UpdateButton'
@@ -11,7 +11,7 @@ import SelectCollection from './SelectCollection'
 
 export default function ListCollection() {
   const [collections, setCollections] = useState([])
-  const [currentCollection, setCurrentCollection] = useState(getDefaultCollection())
+  const [currentCollection, setCurrentCollection] = useState(getCurrentCollection())
   const [updateCollection, setUpdateCollection] = useState({})
   const collectionState = useSelector(state => state.collection)
   const dispatch = useDispatch()

@@ -10,6 +10,19 @@ export const getCollectionWordCount = collectionId => getWordsByCollectionId(col
 
 export const getDefaultCollection = () => ({id: 'default', name: 'default'})
 
+export const getCurrentCollection = () => {
+  const storage = get()
+  return getCollectionById(storage.currentCollectionId)
+}
+
+export const setCurrentCollectionById = collectionId => {
+  const storage = get()
+  if(getCollectionById(collectionId)) {
+    storage.currentCollectionId = collectionId
+    save(storage)
+  }
+}
+
 export const initStorage = () => addCollectionToLocalStorage(getDefaultCollection())
 
 export const getWords = () => get().words
@@ -40,6 +53,8 @@ export const getTodayWordsByCollectionId = collectionId => {
 export const getRecallWords = () => getWords().filter(w => w.count >= maxTrack)
 
 export const getCollections = () => get().collections
+
+export const getCollectionById = collectionId => getCollections().find(c => c.id = collectionId)
 
 export const addWordToLocalStorage = word => {
   const storage = get()
@@ -345,8 +360,8 @@ export const saveToFile = () => {
 
 export const restoreFromFile = (content) => mergeWordsToLocalStorage(JSON.parse(content))
 
-export const save = wordList => 
-  localStorage.setItem('Eng:Words', JSON.stringify(wordList))
+export const save = storage => 
+  localStorage.setItem('Eng:Words', JSON.stringify(storage))
 
 export const get = () => {
   const storageStream = localStorage.getItem('Eng:Words')
@@ -361,6 +376,9 @@ export const get = () => {
   }
   if (!storage.collections) {
     storage.collections = []
+  }
+  if (!storage.currentCollectionId) {
+    storage.currentCollectionId = 'default'
   }
   return storage
 }
