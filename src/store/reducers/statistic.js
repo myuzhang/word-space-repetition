@@ -1,14 +1,15 @@
-import { getCollectionWordCount, getTotalWordCount} from '../../utils'
+import { getCurrentCollectionWordCount, getTotalWordCount} from '../../utils'
 import {
   SET_COLLECTION_WORD_COUNT,
   INCREASE_TOTAL_WORD_COUNT,
+  UPDATE_TOTAL_WORD_COUNT,
   DECREASE_TOTAL_WORD_COUNT,
   INCREASE_COLLECTION_WORD_COUNT,
   DECREASE_COLLECTION_WORD_COUNT } from '../../const'
 
 export default function statistics (
   state = {
-        collectionWordCount: getCollectionWordCount('default'),
+        collectionWordCount: getCurrentCollectionWordCount(),
         totalwordCount: getTotalWordCount()},
     action) {
   switch(action.type) {
@@ -36,6 +37,11 @@ export default function statistics (
       return {
         ...state,
         totalwordCount: state.totalwordCount - action.payload
+      }
+    case UPDATE_TOTAL_WORD_COUNT:
+      return {
+        ...state,
+        totalwordCount: getTotalWordCount()
       }
       default:
         return state

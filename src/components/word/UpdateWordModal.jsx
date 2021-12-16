@@ -6,6 +6,7 @@ import className from 'classnames'
 import { getCollections, getCurrentCollection } from '../../utils'
 import styles from './Word.module.css';
 import { INPUT_MAX_LENGTH } from '../../const';
+import { updateWordToLocalStorage } from '../../utils'
 
 export default function UpdateWordModal(props) {
   let subtitle
@@ -41,16 +42,25 @@ export default function UpdateWordModal(props) {
     if (e.target[0].value) {
       const trimedWord = e.target[0].value.trim()
       if (trimedWord) {
-        if (e.target[1].value !== props.word.collectionId) {
-          dispatch(action.decreaseCollectionWordCount(1))
+        if (trimedWord.toLowerCase() !== props.word.value.toLowerCase() ||
+            e.target[1].value !== props.word.collectionId) {
+              const updateWord = {
+                id: props.word.id,
+                collectionId: e.target[1].value,
+                value: trimedWord,
+                count: props.word.count,
+                date: props.word.date
+              }
+              console.log(updateWord);
+              
+              updateWordToLocalStorage(updateWord)
+
+              if (e.target[1].value !== props.word.collectionId) {
+                dispatch(action.decreaseCollectionWordCount(1))
+                dispatch(action.updateTotalWordCount())
+              }
+              dispatch(action.updateWord(updateWord))
         }
-        dispatch(action.updateWord({
-          id: props.word.id,
-          collectionId: e.target[1].value,
-          value: trimedWord,
-          count: props.word.count,
-          date: props.word.date
-        }))
       }
     }
     closeModal()

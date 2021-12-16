@@ -1,19 +1,28 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCollectionWordCount, getRecallWords, restoreFromFile, saveToFile } from '../../utils';
 import styles from './Statistics.module.css'
 import action from '../../store/actions'
 
 export default function Statistics() {
+  const [count, setCount] = useState({total: 0, collection: 0})
   const statistics = useSelector(state => state.statistics)
   const currentCollection = useSelector(state => state.currentCollection)
   const recallButton = useRef(null)
   const dispatch = useDispatch()
 
   useEffect(() => {
+    console.log(currentCollection.id);
+    
     const collectionWordCount = getCollectionWordCount(currentCollection.id)
-    dispatch(action.setCollectionWordCount(collectionWordCount))
-  }, [currentCollection, dispatch])
+    setCount(prevState => ({total: prevState.total, collection: collectionWordCount}))
+  }, [currentCollection])
+
+  useEffect(() => {
+    console.log(statistics);
+    
+    setCount({total: statistics.totalwordCount, collection: statistics.collectionWordCount})
+  }, [statistics])
 
   const handleSave = () => saveToFile()
   const handleRestore = e => {
@@ -46,20 +55,18 @@ export default function Statistics() {
   }
 
   return (
-    <>
-      <div className={styles.statWrapper}>
-        <p className={styles.compactLine}>Total Words: <strong> {statistics.totalwordCount || '⏰'}</strong></p>
-        <p className={styles.compactLine}>Collection Words: <strong>{statistics.collectionWordCount || '⏰'}</strong></p>
-        <button className={styles.compactLine} onClick={handleRecall} ref={recallButton}>Recall Words: {getRecallWords().length}</button>
-        <div className={styles.fileAction}>
-          <button onClick={handleSave}>Download My Words</button>
-          <div className={styles.verticalSeparate}></div>
-          <form>
-            <label htmlFor="restoreFromFile"><strong>Apply your Wrods:</strong></label>
-            <input type='file' id="restoreFromFile" accept=".json" onChange={handleRestore}></input> 
-          </form>
-        </div>
+    <div className={styles.statWrapper}>
+      <p className={styles.compactLine}>Total Words: <strong> {count.total || '⏰'}</strong></p>
+      <p className={styles.compactLine}>Collection Words: <strong>{count.collection || '⏰'}</strong></p>
+      <button className={styles.compactLine} onClick={handleRecall} ref={recallButton}>Recall Words: {getRecallWords().length}</button>
+      <div className={styles.fileAction}>
+        <button onClick={handleSave}>Download My Words</button>
+        <div className={styles.verticalSeparate}></div>
+        <form>
+          <label htmlFor="restoreFromFile"><strong>Apply your Wrods:</strong></label>
+          <input type='file' id="restoreFromFile" accept=".json" onChange={handleRestore}></input> 
+        </form>
       </div>
-    </>
+    </div>
   )
 }

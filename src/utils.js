@@ -8,14 +8,16 @@ export const getTotalWordCount = () => getWords().length
 
 export const getCollectionWordCount = collectionId => getWordsByCollectionId(collectionId).length
 
+export const getCurrentCollectionWordCount = collectionId => getWordsByCollectionId(getCurrentCollection().id).length
+
 export const getDefaultCollection = () => ({id: 'default', name: 'default'})
 
 export const getCurrentCollection = () => {
   const storage = get()
-  return getCollectionById(storage.currentCollectionId)
+  return getCollectionById(storage.currentCollectionId ?? 'default')
 }
 
-export const setCurrentCollectionById = collectionId => {
+export const setCurrentCollectionId = collectionId => {
   const storage = get()
   if(getCollectionById(collectionId)) {
     storage.currentCollectionId = collectionId
@@ -54,7 +56,9 @@ export const getRecallWords = () => getWords().filter(w => w.count >= maxTrack)
 
 export const getCollections = () => get().collections
 
-export const getCollectionById = collectionId => getCollections().find(c => c.id = collectionId)
+export const getCollectionById = id => getCollections().find(c => c.id = id)
+
+export const getCollectionByName = name => getCollections().find(c => c.name = name)
 
 export const addWordToLocalStorage = word => {
   const storage = get()
@@ -87,13 +91,14 @@ export const updateWordToLocalStorage = word => {
   const { words } = storage
   const foundWord = words.find(w => w.id === word.id)
   if (foundWord) {
-    const duplicatedWordInTheSameCollection = 
-      words.find(w => w.value === word.value && w.collectionId === word.collectionId)
-    if(duplicatedWordInTheSameCollection) {
-      return
+    const duplicatedWordInTheSameCollectionIndex = 
+      words.findIndex(w => w.value === word.value && w.collectionId === word.collectionId)
+    if(duplicatedWordInTheSameCollectionIndex !== -1) {
+      storage.words = words.filter(w => w.id !== foundWord.id)
+    } else {
+      foundWord.value = word.value
+      foundWord.collectionId = word.collectionId
     }
-    foundWord.value = word.value
-    foundWord.collectionId = word.collectionId
     save(storage)
   }
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { getTodayWordsByCollectionId, deleteWordsFromLocalStorage, getRecallWords, updateWordToLocalStorage } from '../../utils'
+import { getTodayWordsByCollectionId, deleteWordsFromLocalStorage, getRecallWords } from '../../utils'
 import {DELETE_COLLECTION} from '../../const'
 import Word from '../word/Word';
 import SelectAll from '../word/SelectAll'
@@ -101,9 +101,8 @@ export default function WordList({ setHighlightWord }) {
           checkboxWords: [...prevCheckboxWords.checkboxWords]
         }
       })
-      updateWordToLocalStorage(wordState.updateWord)
     }
-  }, [wordState, wordState.updateWord])
+  }, [wordState.updateWord])
 
   useEffect(() => {
     setHighlightWord(wordState.highlightWord.value)

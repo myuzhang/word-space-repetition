@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import className from 'classnames'
 import styles from './Collection.module.css'
 import baseStyles from '../../Base.module.css'
-import { getCollections, getCurrentCollection } from '../../utils'
+import { getCollections, getCurrentCollection, setCurrentCollectionId } from '../../utils'
 import action from '../../store/actions'
 import DeleteButton from './DeleteButton'
 import Updatebutton from './UpdateButton'
@@ -20,9 +20,11 @@ export default function ListCollection() {
     const collections = getCollections()
     const latestCurrent = collections.find(c => c.id === currentCollection.id)
     if (!latestCurrent) { // currentCollection was deleted, get the next available from store
+      setCurrentCollectionId(collections[0].id)
       dispatch(action.chooseCollection(collections[0]))
       setCurrentCollection(collections[0])
     } else if (latestCurrent.name !== currentCollection.name) { // currentCollection was updated, update with latest
+      setCurrentCollectionId(latestCurrent.id)
       dispatch(action.chooseCollection(latestCurrent))
       setCurrentCollection(latestCurrent)
     }

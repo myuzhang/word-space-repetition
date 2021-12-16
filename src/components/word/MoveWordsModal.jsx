@@ -42,6 +42,7 @@ export default function MoveWordsModal({modalOpen, setModalOpen, checkboxes, set
     moveWordsToCollection(movingWords, targetCollectionId)
     const leftWord = checkboxes.checkboxWords.filter(cw => !cw.isChecked)
     dispatch(action.decreaseCollectionWordCount(movingWords.length))
+    dispatch(action.updateTotalWordCount())
     setCheckboxes({
       isAllSelected: checkboxes.isAllSelected,
       checkboxWords: leftWord,

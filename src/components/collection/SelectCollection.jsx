@@ -2,15 +2,16 @@ import React from 'react'
 import { useDispatch } from 'react-redux';
 import action from '../../store/actions'
 import UpdateCollection from './UpdateCollection'
-import {setCurrentCollectionById} from '../../utils';
+import { getCollectionWordCount, setCurrentCollectionId } from '../../utils';
 
 export default function SelectCollection({collection, updateCollection, setUpdateCollection, setCurrentCollection}) {
   const dispatch = useDispatch()
 
   function selectCollection() {
-    setCurrentCollectionById(collection.id)
+    setCurrentCollectionId(collection.id)
     setCurrentCollection({...collection})
     dispatch(action.chooseCollection(collection))
+    dispatch(action.setCollectionWordCount(getCollectionWordCount(collection.id)))
   }
 
   return (
