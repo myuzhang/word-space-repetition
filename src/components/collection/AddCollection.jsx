@@ -32,7 +32,7 @@ import { INPUT_MAX_LENGTH } from '../../const';
   }
 
   return (
-    <div className={baseStyle.bigSpace}>
+    <div className={baseStyle.newItemContainer}>
       <form onSubmit={handleSubmit}>
         <label htmlFor="newCollection">Add new collection:</label>
         <input className={baseStyle.inputText} type="text" id="newCollection" value={collection} onChange={handleChange} placeholder="Add collection" maxLength={INPUT_MAX_LENGTH}/>

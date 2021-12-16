@@ -2,7 +2,7 @@
 
 iframe {
   width:100%;
-  height: 90vh;
+  height: 85vh;
 }
 
 input:focus::placeholder {
@@ -27,25 +27,9 @@ input:focus::placeholder {
   background: linear-gradient(90deg, var(--dark) 0%, var(--light) 10%, var(--dark) 20%, var(--darkest) 50%, var(--dark) 80%, var(--light) 90%, var(--dark) 100%); /* w3c */
 }
 
-.ribbon {
-  height: 70px;
-  width:100%;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-  border-top: 1px solid var(--light);
-  border-bottom: 1px solid var(--dark);
-  display: flex;
-  background-color: green;
-}
 
 .text-green {
   color: azure;
-}
-
-.left-text {
-  margin: 6px;
-  text-align: left;
-  font-size: larger;
-  font-weight: bold;
 }
 
 .input-text:focus + .underline {
@@ -77,8 +61,8 @@ input:focus::placeholder {
 	cursor:pointer;
 	color:#ffffff;
 	font-family:Arial;
-	font-size:1.2rem;
-	padding:6px 24px;
+	font-size:1rem;
+	padding:4px 24px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #854629;
 }

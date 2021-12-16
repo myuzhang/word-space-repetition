@@ -32,7 +32,7 @@ export default function ListCollection() {
   }, [collectionState, currentCollection, dispatch])
 
   return (
-    <div className={className(styles.navDropdown, baseStyles.bigSapce)}>
+    <div className={className(styles.navDropdown, baseStyles.newItemContainer)}>
       <nav id="choose-collection" role="navigation">
         <ul>
           <li>

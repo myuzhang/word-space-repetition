@@ -2,11 +2,6 @@ a:link {
   text-decoration: none;
 }
 
-.bigSapce {
-  margin: 10px 0;
-  height: 40px;
-}
-
 .scrollThenSticky {
   position: sticky;
   top: 0;
@@ -17,10 +12,10 @@ a:link {
   bottom: 0;
 }
 
-.bigSpace {
+.newItemContainer {
   margin-top: 1vh;
   margin-bottom: 1vh;
-  height: 10vh;
+  height: 5vh;
 }
 
 .inputText {

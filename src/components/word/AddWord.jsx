@@ -44,7 +44,7 @@ export default function AddWord() {
   }, [currentCollection])
 
   return (
-    <div className={baseStyle.bigSpace}>
+    <div className={baseStyle.newItemContainer}>
       <form onSubmit={handleSubmit}>
         <label htmlFor="addWord">Add new word:</label>
         <input className={baseStyle.inputText} type="text" id="addWord" value={word} onChange={handleChange} placeholder="Add word" maxLength={INPUT_MAX_LENGTH}/>

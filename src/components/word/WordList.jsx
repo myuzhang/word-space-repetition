@@ -5,7 +5,6 @@ import {DELETE_COLLECTION} from '../../const'
 import Word from '../word/Word';
 import SelectAll from '../word/SelectAll'
 import styles from './Word.module.css'
-import baseStyles from '../../Base.module.css';
 import WordRecall from './WordRecall';
 import AddWordInline from './AddWordInline';
 
@@ -111,7 +110,7 @@ export default function WordList({ setHighlightWord }) {
   }, [setHighlightWord, wordState.highlightWord])
 
   return (
-    <div className={baseStyles.scrollThenSticky}>
+    <div>
       { isInRecall ?
           getRecallWords().length === 0 ?
             <p><span role="img" aria-label="grinning">😅</span> There is no word to recall</p> :
