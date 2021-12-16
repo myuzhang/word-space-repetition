@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/word-space-repetition/static/css/main.99036f84.chunk.css",
-    "main.js": "/word-space-repetition/static/js/main.a6667528.chunk.js",
-    "main.js.map": "/word-space-repetition/static/js/main.a6667528.chunk.js.map",
+    "main.js": "/word-space-repetition/static/js/main.7a7d4c9e.chunk.js",
+    "main.js.map": "/word-space-repetition/static/js/main.7a7d4c9e.chunk.js.map",
     "runtime-main.js": "/word-space-repetition/static/js/runtime-main.e03d573a.js",
     "runtime-main.js.map": "/word-space-repetition/static/js/runtime-main.e03d573a.js.map",
-    "static/js/2.9bf53111.chunk.js": "/word-space-repetition/static/js/2.9bf53111.chunk.js",
-    "static/js/2.9bf53111.chunk.js.map": "/word-space-repetition/static/js/2.9bf53111.chunk.js.map",
+    "static/js/2.18de39f4.chunk.js": "/word-space-repetition/static/js/2.18de39f4.chunk.js",
+    "static/js/2.18de39f4.chunk.js.map": "/word-space-repetition/static/js/2.18de39f4.chunk.js.map",
     "index.html": "/word-space-repetition/index.html",
-    "precache-manifest.532b5975ec94d3484a3a46d2494c77f9.js": "/word-space-repetition/precache-manifest.532b5975ec94d3484a3a46d2494c77f9.js",
+    "precache-manifest.d201b5f6bea98d77deea8c822b3e69d6.js": "/word-space-repetition/precache-manifest.d201b5f6bea98d77deea8c822b3e69d6.js",
     "service-worker.js": "/word-space-repetition/service-worker.js",
     "static/css/main.99036f84.chunk.css.map": "/word-space-repetition/static/css/main.99036f84.chunk.css.map",
-    "static/js/2.9bf53111.chunk.js.LICENSE.txt": "/word-space-repetition/static/js/2.9bf53111.chunk.js.LICENSE.txt"
+    "static/js/2.18de39f4.chunk.js.LICENSE.txt": "/word-space-repetition/static/js/2.18de39f4.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.e03d573a.js",
-    "static/js/2.9bf53111.chunk.js",
+    "static/js/2.18de39f4.chunk.js",
     "static/css/main.99036f84.chunk.css",
-    "static/js/main.a6667528.chunk.js"
+    "static/js/main.7a7d4c9e.chunk.js"
   ]
 }

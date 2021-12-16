@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b887c04bd2e5a706576f956469ffcc7a",
+    "revision": "7cd99aa341d2f8f27923e74850da293c",
     "url": "/word-space-repetition/index.html"
   },
   {
-    "revision": "b4ef038fe0ab0605eebb",
+    "revision": "f9cfe7e797d618e3d472",
     "url": "/word-space-repetition/static/css/main.99036f84.chunk.css"
   },
   {
-    "revision": "4d48049be7858e6f49ea",
-    "url": "/word-space-repetition/static/js/2.9bf53111.chunk.js"
+    "revision": "1fc7ae4a97bd9433039f",
+    "url": "/word-space-repetition/static/js/2.18de39f4.chunk.js"
   },
   {
     "revision": "ff8c2b66e7f6af48a337d6759d3b5618",
-    "url": "/word-space-repetition/static/js/2.9bf53111.chunk.js.LICENSE.txt"
+    "url": "/word-space-repetition/static/js/2.18de39f4.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "b4ef038fe0ab0605eebb",
-    "url": "/word-space-repetition/static/js/main.a6667528.chunk.js"
+    "revision": "f9cfe7e797d618e3d472",
+    "url": "/word-space-repetition/static/js/main.7a7d4c9e.chunk.js"
   },
   {
     "revision": "625162aef3be742cb1d2",
