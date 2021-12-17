@@ -51,8 +51,6 @@ export default function UpdateWordModal(props) {
                 count: props.word.count,
                 date: props.word.date
               }
-              console.log(updateWord);
-              
               updateWordToLocalStorage(updateWord)
 
               if (e.target[1].value !== props.word.collectionId) {

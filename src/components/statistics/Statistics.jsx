@@ -12,15 +12,11 @@ export default function Statistics() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log(currentCollection.id);
-    
     const collectionWordCount = getCollectionWordCount(currentCollection.id)
     setCount(prevState => ({total: prevState.total, collection: collectionWordCount}))
   }, [currentCollection])
 
   useEffect(() => {
-    console.log(statistics);
-    
     setCount({total: statistics.totalwordCount, collection: statistics.collectionWordCount})
   }, [statistics])
 

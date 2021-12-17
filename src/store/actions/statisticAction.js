@@ -4,6 +4,7 @@ import {
   UPDATE_TOTAL_WORD_COUNT,
   INCREASE_COLLECTION_WORD_COUNT,
   DECREASE_COLLECTION_WORD_COUNT,
+  UPDATE_CURRENT_COLLECTION_WORD_COUNT,
   SET_COLLECTION_WORD_COUNT } from '../../const'
 
 export const increaseTotalWordCount = number => ({
@@ -28,6 +29,10 @@ export const increaseCollectionWordCount = number => ({
 export const decreaseCollectionWordCount = number => ({
   type: DECREASE_COLLECTION_WORD_COUNT,
   payload: number,
+})
+
+export const updateCurrentCollectionWordCount = () => ({
+  type: UPDATE_CURRENT_COLLECTION_WORD_COUNT,
 })
 
 export const setCollectionWordCount = collectionWordCount => ({

@@ -8,7 +8,7 @@ export const getTotalWordCount = () => getWords().length
 
 export const getCollectionWordCount = collectionId => getWordsByCollectionId(collectionId).length
 
-export const getCurrentCollectionWordCount = collectionId => getWordsByCollectionId(getCurrentCollection().id).length
+export const getCurrentCollectionWordCount = () => getWordsByCollectionId(getCurrentCollection().id).length
 
 export const getDefaultCollection = () => ({id: 'default', name: 'default'})
 

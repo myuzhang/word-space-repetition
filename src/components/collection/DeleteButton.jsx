@@ -14,6 +14,8 @@ export default function DeletionButton({collection}) {
         moveWordsFromCollectionToDefault(collection)
         deleteCollectionFromLocalStorage(collection)
         dispatch(action.deleteCollection(collection.id))
+        dispatch(action.updateCurrentCollectionWordCount())
+        dispatch(action.updateTotalWordCount())
       }
     }
   }

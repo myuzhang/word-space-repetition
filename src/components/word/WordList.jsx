@@ -28,7 +28,7 @@ export default function WordList({ setHighlightWord }) {
     if (collectionState.type === DELETE_COLLECTION && currentCollection.id === 'default') {
       setCheckboxes(prevCheckboxes => {
         const words = getTodayWordsByCollectionId(currentCollection.id)
-        const wordsMovedToDefault = words.filter(w => !prevCheckboxes.checkboxWords.some(prev => prev.word.id === w.id))
+        const wordsMovedToDefault = words.filter(w => !prevCheckboxes.checkboxWords.some(prev => prev.word.value === w.value))
         if(wordsMovedToDefault.length > 0) {
           const wordsMovedToDefaultWithCheckbox = wordsMovedToDefault.map(w => ({word: w, isChecked:false}))
           return {
