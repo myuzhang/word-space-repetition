@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/word-space-repetition/precache-manifest.d201b5f6bea98d77deea8c822b3e69d6.js"
+  "/word-space-repetition/precache-manifest.7cdb6afebf1998257a3694b2cfb1b1fc.js"
 );
 
 self.addEventListener('message', (event) => {
