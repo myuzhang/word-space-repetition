@@ -4,11 +4,12 @@ import { TwitterPicker } from 'react-color'
 import action from '../../store/actions'
 import styles from './Word.module.css'
 import MoveWordsModal from './MoveWordsModal';
-import { deleteWordsFromLocalStorage, shuffleArray } from '../../utils';
+import { deleteWordsFromLocalStorage, getTodayWordsByCollectionId, getWordsByCollectionId, shuffleArray } from '../../utils';
 
 export default function SelectAll({checkboxes, setCheckboxes}) {
   const [modalOpen, setModalOpen] = useState(false)
   const [openPalette, setOpenPalette] = useState(false)
+  const [isAllWords, setIsAllWords] = useState(false)
   const [color, setColor] = useState('#fff')
   const dispatch = useDispatch()
 
@@ -40,6 +41,21 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
         dispatch(action.decreaseCollectionWordCount(deleteCount))
       }
     }
+  }
+
+  function handleAllWords() {
+    const toggle = !isAllWords
+    setIsAllWords(toggle)
+    let words
+    if (toggle) {
+      words = getWordsByCollectionId(checkboxes.checkboxWords[0].word.collectionId)
+    } else {
+      words = getTodayWordsByCollectionId(checkboxes.checkboxWords[0].word.collectionId)
+    }
+    setCheckboxes({
+      isAllSelected: false,
+      checkboxWords: words.map(w => ({isChecked: false, word: w}))
+    })
   }
 
   function handleShuffle() {
@@ -120,7 +136,8 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
             </div>
           </div>
         )}
-        <button onClick={handlePalette} title="🎨 Change color for selected words from the collection"><span role="img" aria-label="shuffle bin">🎨</span></button>
+        <button onClick={handleAllWords} title="🎛 Toggle to show all words"><span role="img" aria-label="toggle words">{isAllWords? '🔑' : '🔒'}</span></button>
+        <button onClick={handlePalette} title="🎨 Change color for selected words from the collection"><span role="img" aria-label="palette">🎨</span></button>
         <button onClick={handleGoogleSearch} title="🌏 Explain selected words by Google in new tab from the collection"><span role="img" aria-label="google search">🌐</span></button>
         <button onClick={handleShuffle} title="🔄 Shuffle all words from the collection"><span role="img" aria-label="shuffle bin">🔀</span></button>
         <button onClick={openModal} title="🖋 Move selected words to another collection"><span role="img" aria-label="gear">✍️</span></button>
