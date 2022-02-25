@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import action from '../../store/actions'
-import { deleteWordsFromLocalStorage, getDateInString, getWordSegment, isConfirmedToday, updateWordDate, updateWordSegment } from '../../utils'
+import { deleteWordsFromLocalStorage, getDateInString, getWordSegment, getWordMemeoryTimes, updateWordDate, updateWordSegment } from '../../utils'
 import UpdateWordModal from './UpdateWordModal'
 import styles from './Word.module.css'
 import baseStyles from '../../Base.module.css'
@@ -9,20 +9,14 @@ import classNames from 'classnames'
 
 export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
   const dispatch = useDispatch()
-  const [confirm, setConfirm] = useState(isConfirmedToday(wordWithCheckbox.word) ? '👍' : '🎯')
+  const [memoryCount, setMemoryCount] = useState(getWordMemeoryTimes(wordWithCheckbox.word))
   const [modalOpen, setModalOpen] = useState(false)
   const [isSegment, setIsSegment] = useState(getWordSegment(wordWithCheckbox.word))
 
   const hightlight = useRef('');
 
   const handleToggle = () => {
-    if (confirm !== '👍') {
-      setConfirm('👍')
-      updateWordDate(wordWithCheckbox.word, true)
-    } else {
-      setConfirm('🎯')
-      updateWordDate(wordWithCheckbox.word, false)
-    }
+    setMemoryCount(updateWordDate(wordWithCheckbox.word))
   }
 
   const handleDelete = () => {
@@ -81,7 +75,7 @@ export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
       <div>
         <button onClick={handleHighlightWord} title="📓 Show meaning in the dictionary"><span role="img" aria-label="red textbook">📕</span></button>
         <button onClick={handleSegmentLine} title="🚧 Mark a segment line"><span role="img" aria-label="mark">🚧</span></button>
-        <button onClick={handleToggle} title="🧠 Click on it if you can remember the word and it won't display after you click 7 times on different day"><span role="img" aria-label="thumbs up">{confirm}</span></button>
+        <button onClick={handleToggle} title="🧠 Click on it if you can remember the word and it won't display after you click 7 times on different day"><span role="img" aria-label="thumbs up">{memoryCount}</span></button>
         <button onClick={openModal} title="🖋 Modify the word"><span role="img" aria-label="gear">✍️</span></button>
         {modalOpen && <UpdateWordModal word={wordWithCheckbox.word} modalOpen={modalOpen} setModalOpen={setModalOpen}/>}
         <button onClick={handleDelete} title="⚠️ Remove the word from the list"><span role="img" aria-label="trash bin">🗑</span></button>

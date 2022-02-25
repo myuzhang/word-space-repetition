@@ -1,4 +1,6 @@
-const trackingDates = [0, 1, 2, 4, 6, 10]
+const trackingDates = [0, 1, 1, 2, 2, 4, 6]
+
+const trackingDatesEmoji = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '👍']
 
 const maxTrack = trackingDates.length
 
@@ -36,8 +38,7 @@ export const getTodayWords = () => {
   const words = getWords()
   const todayDigit = getDateInDigit()
   const todayWords = words.filter(word => 
-    (word.count < maxTrack && word.date + trackingDates[word.count] <= todayDigit)
-    || !word.lastVisit || word.lastVisit === todayDigit)
+    word.count < maxTrack && (word.lastVisit === todayDigit || word.lastVisit + trackingDates[word.count] <= todayDigit))
   
   return todayWords
 }
@@ -46,8 +47,7 @@ export const getTodayWordsByCollectionId = collectionId => {
   const words = getWordsByCollectionId(collectionId)
   const todayDigit = getDateInDigit()
   const todayWords = words.filter(word => 
-    (word.count < maxTrack && word.date + trackingDates[word.count] <= todayDigit)
-    || !word.lastVisit || word.lastVisit === todayDigit)
+    word.count < maxTrack && (word.lastVisit === todayDigit || word.lastVisit + trackingDates[word.count] <= todayDigit))
   
   return todayWords
 }
@@ -306,50 +306,43 @@ export const getDateInString = dateInNumber => {
   return date.toDateString()
 }
 
-export const isConfirmedToday = word => {
+export const getWordMemeoryTimes = word => {
   const storage  = get()
   const { words } = storage
 
   if (words.length === 0) {
-    return false
+    return '☢️'
   }
 
   const foundWord = words.find(w => w.id === word.id)
   if (!foundWord) {
-    return false
+    return '☢️'
   }
   
-  return foundWord.date + trackingDates[foundWord.count] > getDateInDigit()
+  return trackingDatesEmoji[foundWord.count]
 }
 
-export const updateWordDate = (word, increase) => {
+export const updateWordDate = (word) => {
   const storage  = get()
   const { words } = storage
 
   if (words.length === 0) {
-    return
+    return '☢️'
   }
 
   const foundWord = words.find(w => w.id === word.id)
   if (foundWord) {
     const todayDigit = getDateInDigit()
-    foundWord.lastVisit = todayDigit
-    if (increase) {
+    if (foundWord.lastVisit !== todayDigit) {
+      foundWord.lastVisit = todayDigit
       if (foundWord.count < maxTrack) {
-        const newCount = foundWord.count + 1
-        if (foundWord.date + trackingDates[newCount] < todayDigit) {
-          foundWord.date = todayDigit
-        } else {
-          foundWord.count = newCount
-        }
+        foundWord.count += 1
       }
-    } else {
-      if (foundWord.count > 0) {
-        foundWord.count -= 1
-      }
+      save(storage)
     }
-    save(storage)
   }
+
+  return trackingDatesEmoji[foundWord.count]
 }
 
 export const updateWordSegment = (word, isSegment) => {
