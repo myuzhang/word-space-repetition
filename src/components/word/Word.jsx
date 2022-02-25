@@ -65,9 +65,12 @@ export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
     }
   }
 
+  console.log(wordWithCheckbox.word.backgroundColor);
+  
+
   return (
     <div className={styles.wordContainer}>
-      <div className={classNames({[styles.wordText]: true, [styles.segment]: isSegment})} name={wordWithCheckbox.word.value} ref={hightlight} style={{backgroundColor: wordWithCheckbox.backgroundColor || ""}}>
+      <div className={classNames({[styles.wordText]: true, [styles.segment]: isSegment})} name={wordWithCheckbox.word.value} ref={hightlight} style={{backgroundColor: wordWithCheckbox.word.backgroundColor || ""}}>
         <input checked={wordWithCheckbox.isChecked} onChange={handleCheckboxClick} type="checkbox" name="word" id="word"/>
         <label htmlFor="word">
           <a className={wordWithCheckbox.word.lastVisit ? baseStyles.tooltip: {}} data-text={`Last visited @ ${getDateInString(wordWithCheckbox.word.lastVisit)}`} href={`https://www.google.com/search?q=${wordWithCheckbox.word.value}+definition`} target="_blank" rel="noopener noreferrer">{wordWithCheckbox.word.value}</a>

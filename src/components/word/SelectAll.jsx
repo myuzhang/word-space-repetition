@@ -4,7 +4,7 @@ import { TwitterPicker } from 'react-color'
 import action from '../../store/actions'
 import styles from './Word.module.css'
 import MoveWordsModal from './MoveWordsModal';
-import { deleteWordsFromLocalStorage, getTodayWordsByCollectionId, getWordsByCollectionId, shuffleArray } from '../../utils';
+import { deleteWordsFromLocalStorage, getTodayWordsByCollectionId, getWordsByCollectionId, shuffleArray, updateWordsBackgroundColor } from '../../utils';
 
 export default function SelectAll({checkboxes, setCheckboxes}) {
   const [modalOpen, setModalOpen] = useState(false)
@@ -25,7 +25,7 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
     const newState = !checkboxes.isAllSelected
     setCheckboxes({
       isAllSelected: newState,
-      checkboxWords: checkboxes.checkboxWords.map(cw => ({word: cw.word, backgroundColor: cw.backgroundColor, isChecked: newState}))
+      checkboxWords: checkboxes.checkboxWords.map(cw => ({word: cw.word, isChecked: newState}))
     })
   }
 
@@ -76,11 +76,12 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
 
   function confirmColorPicker() {
     setOpenPalette(false)
+    updateWordsBackgroundColor(checkboxes.checkboxWords.filter(cw => cw.isChecked).map(cw => cw.word), color)
     setCheckboxes({
       isAllSelected: checkboxes.isAllSelected,
       checkboxWords: checkboxes.checkboxWords.map(cw => {
         if(cw.isChecked) {
-          cw.backgroundColor = color
+          cw.word.backgroundColor = color
         }
         return cw
       })
@@ -89,16 +90,18 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
   
   function resetColorPicker() {
     setOpenPalette(false)
+    updateWordsBackgroundColor(checkboxes.checkboxWords.filter(cw => cw.isChecked).map(cw => cw.word), undefined)
     setCheckboxes({
       isAllSelected: checkboxes.isAllSelected,
       checkboxWords: checkboxes.checkboxWords.map(cw => {
         if(cw.isChecked) {
-          cw.backgroundColor = undefined
+          cw.word.backgroundColor = undefined
         }
         return cw
       })
     })
   }
+  
   function changeColor(color) {
     setColor(color.hex)
   }

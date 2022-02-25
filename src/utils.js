@@ -383,6 +383,39 @@ export const getWordSegment = (word) => {
   return false
 }
 
+export const updateWordsBackgroundColor = (updatingWords, backgroundColor) => {
+  const storage  = get()
+  const { words } = storage
+
+  if (words.length === 0) {
+    return
+  }
+
+  updatingWords.forEach(u => {
+    const foundWord = words.find(w => w.id === u.id)
+    if (foundWord) {
+      foundWord.backgroundColor = backgroundColor
+    }
+  })
+  save(storage)
+}
+
+export const getWordsBackgroundColor = (word) => {
+  const storage  = get()
+  const { words } = storage
+
+  if (words.length === 0) {
+    return undefined
+  }
+
+  const foundWord = words.find(w => w.id === word.id)
+  if (foundWord) {
+    return foundWord.backgroundColor
+  }
+
+  return undefined
+}
+
 export const saveToFile = () => {
   const fileData = JSON.stringify(get())
   const blob = new Blob([fileData], {type: "text/plain"})
