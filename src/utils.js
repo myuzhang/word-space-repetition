@@ -322,7 +322,6 @@ export const isConfirmedToday = word => {
   return foundWord.date + trackingDates[foundWord.count] > getDateInDigit()
 }
 
-
 export const updateWordDate = (word, increase) => {
   const storage  = get()
   const { words } = storage
@@ -351,6 +350,37 @@ export const updateWordDate = (word, increase) => {
     }
     save(storage)
   }
+}
+
+export const updateWordSegment = (word, isSegment) => {
+  const storage  = get()
+  const { words } = storage
+
+  if (words.length === 0) {
+    return
+  }
+
+  const foundWord = words.find(w => w.id === word.id)
+  if (foundWord) {
+    foundWord.isSegment = isSegment
+    save(storage)
+  }
+}
+
+export const getWordSegment = (word) => {
+  const storage  = get()
+  const { words } = storage
+
+  if (words.length === 0) {
+    return false
+  }
+
+  const foundWord = words.find(w => w.id === word.id)
+  if (foundWord) {
+    return !!foundWord.isSegment
+  }
+
+  return false
 }
 
 export const saveToFile = () => {
