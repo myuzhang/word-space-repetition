@@ -38,7 +38,7 @@ export const getTodayWords = () => {
   const words = getWords()
   const todayDigit = getDateInDigit()
   const todayWords = words.filter(word => 
-    word.count < maxTrack && (word.lastVisit === todayDigit || word.lastVisit + trackingDates[word.count] <= todayDigit))
+    word.count < maxTrack && (!word.lastVisit || word.lastVisit === todayDigit || word.lastVisit + trackingDates[word.count] <= todayDigit))
   
   return todayWords
 }
@@ -47,7 +47,7 @@ export const getTodayWordsByCollectionId = collectionId => {
   const words = getWordsByCollectionId(collectionId)
   const todayDigit = getDateInDigit()
   const todayWords = words.filter(word => 
-    word.count < maxTrack && (word.lastVisit === todayDigit || word.lastVisit + trackingDates[word.count] <= todayDigit))
+    word.count < maxTrack && (!word.lastVisit || word.lastVisit === todayDigit || word.lastVisit + trackingDates[word.count] <= todayDigit))
   
   return todayWords
 }
