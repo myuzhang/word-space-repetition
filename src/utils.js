@@ -1,6 +1,6 @@
 const trackingDates = [0, 1, 1, 2, 2, 4, 6]
 
-const trackingDatesEmoji = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '👍']
+const trackingDatesEmoji = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '🏆']
 
 const maxTrack = trackingDates.length
 

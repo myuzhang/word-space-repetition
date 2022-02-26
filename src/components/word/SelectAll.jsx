@@ -54,7 +54,8 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
     }
     setCheckboxes({
       isAllSelected: false,
-      checkboxWords: words.map(w => ({isChecked: false, word: w}))
+      checkboxWords: words.map(w => ({isChecked: false, word: w})),
+      showAll: toggle
     })
   }
 

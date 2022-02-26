@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import action from '../../store/actions'
-import { deleteWordsFromLocalStorage, getDateInString, getWordSegment, getWordConfirmation, updateWordConfirmation, updateWordSegment } from '../../utils'
+import { deleteWordsFromLocalStorage, getDateInString, getWordSegment, getWordConfirmation, getWordMemeoryTimes, updateWordConfirmation, updateWordSegment } from '../../utils'
 import UpdateWordModal from './UpdateWordModal'
 import styles from './Word.module.css'
 import baseStyles from '../../Base.module.css'
@@ -9,7 +9,6 @@ import classNames from 'classnames'
 
 export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
   const dispatch = useDispatch()
-  // const [memoryCount, setMemoryCount] = useState(getWordMemeoryTimes(wordWithCheckbox.word))
   const [confirm, setConfirm] = useState(getWordConfirmation(wordWithCheckbox.word))
   const [modalOpen, setModalOpen] = useState(false)
   const [isSegment, setIsSegment] = useState(getWordSegment(wordWithCheckbox.word))
@@ -77,7 +76,11 @@ export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
       <div>
         <button onClick={handleHighlightWord} title="📓 Show meaning in the dictionary"><span role="img" aria-label="red textbook">📕</span></button>
         <button onClick={handleSegmentLine} title="🚧 Mark a segment line"><span role="img" aria-label="mark">🚧</span></button>
+        {checkboxes.showAll ? 
+        <button onClick={handleToggle} title="🧠 shows how many times have you memorized"><span role="img" aria-label="thumbs up">{getWordMemeoryTimes(wordWithCheckbox.word)}</span></button>
+        :
         <button onClick={handleToggle} title="🧠 Click on it if you can remember the word and it won't display after you click 7 times on different day"><span role="img" aria-label="thumbs up">{confirm? '👍' : '🎯'}</span></button>
+        }
         <button onClick={openModal} title="🖋 Modify the word"><span role="img" aria-label="gear">✍️</span></button>
         {modalOpen && <UpdateWordModal word={wordWithCheckbox.word} modalOpen={modalOpen} setModalOpen={setModalOpen}/>}
         <button onClick={handleDelete} title="⚠️ Remove the word from the list"><span role="img" aria-label="trash bin">🗑</span></button>
