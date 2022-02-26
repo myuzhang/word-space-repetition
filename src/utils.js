@@ -52,6 +52,8 @@ export const getTodayWordsByCollectionId = collectionId => {
   return todayWords
 }
 
+export const getWordCountByCollectionId = collectionId => getTodayWordsByCollectionId(collectionId).length
+
 export const getRecallWords = () => getWords().filter(w => w.count >= maxTrack)
 
 export const getCollections = () => get().collections
@@ -304,6 +306,43 @@ export const getDateInString = dateInNumber => {
   const day = `${dateInNumber}`.substring(6, 8)
   const date = new Date(`${year}-${month}-${day}`)
   return date.toDateString()
+}
+
+export const getWordConfirmation = word => {
+  const storage  = get()
+  const { words } = storage
+
+  if (words.length === 0) {
+    return false
+  }
+
+  const foundWord = words.find(w => w.id === word.id)
+  if (!foundWord) {
+    return false
+  }
+
+  const todayDigit = getDateInDigit()
+  return foundWord.lastVisit === todayDigit
+}
+
+export const updateWordConfirmation = (word, confirm) => {
+  const storage  = get()
+  const { words } = storage
+
+  if (words.length === 0) {
+    return
+  }
+
+  const foundWord = words.find(w => w.id === word.id)
+  if (foundWord) {
+    const todayDigit = getDateInDigit()
+    if (confirm) {
+      foundWord.lastVisit = todayDigit
+    } else {
+      foundWord.lastVisit = todayDigit - 1
+    }
+    save(storage)
+  }
 }
 
 export const getWordMemeoryTimes = word => {
