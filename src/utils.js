@@ -338,8 +338,14 @@ export const updateWordConfirmation = (word, confirm) => {
     const todayDigit = getDateInDigit()
     if (confirm) {
       foundWord.lastVisit = todayDigit
+      if (foundWord.count < maxTrack) {
+        foundWord.count += 1
+      }
     } else {
       foundWord.lastVisit = todayDigit - 1
+      if (foundWord.count > 0) {
+        foundWord.count -= 1
+      }
     }
     save(storage)
   }
@@ -358,29 +364,6 @@ export const getWordMemeoryTimes = word => {
     return '☢️'
   }
   
-  return trackingDatesEmoji[foundWord.count]
-}
-
-export const updateWordDate = (word) => {
-  const storage  = get()
-  const { words } = storage
-
-  if (words.length === 0) {
-    return '☢️'
-  }
-
-  const foundWord = words.find(w => w.id === word.id)
-  if (foundWord) {
-    const todayDigit = getDateInDigit()
-    if (foundWord.lastVisit !== todayDigit) {
-      foundWord.lastVisit = todayDigit
-      if (foundWord.count < maxTrack) {
-        foundWord.count += 1
-      }
-      save(storage)
-    }
-  }
-
   return trackingDatesEmoji[foundWord.count]
 }
 

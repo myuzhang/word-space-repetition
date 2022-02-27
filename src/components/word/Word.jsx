@@ -70,14 +70,14 @@ export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
       <div className={classNames({[styles.wordText]: true, [styles.segment]: isSegment})} name={wordWithCheckbox.word.value} style={{backgroundColor: wordWithCheckbox.word.backgroundColor || ""}}>
         <input checked={wordWithCheckbox.isChecked} onChange={handleCheckboxClick} type="checkbox" name="word" id="word"/>
         <label htmlFor="word">
-          <a className={wordWithCheckbox.word.lastVisit ? baseStyles.tooltip: {}} data-text={`Last visited @ ${getDateInString(wordWithCheckbox.word.lastVisit)}`} href={`https://www.google.com/search?q=${wordWithCheckbox.word.value}+definition`} name="word" ref={hightlight} target="_blank" rel="noopener noreferrer">{wordWithCheckbox.word.value}</a>
+          <a className={classNames({[baseStyles.tooltip]: !!wordWithCheckbox.word.lastVisit})} data-text={`Last visited @ ${getDateInString(wordWithCheckbox.word.lastVisit)}`} href={`https://www.google.com/search?q=${wordWithCheckbox.word.value}+definition`} name="word" ref={hightlight} target="_blank" rel="noopener noreferrer">{wordWithCheckbox.word.value}</a>
         </label>
       </div>
       <div>
         <button onClick={handleHighlightWord} title="📓 Show meaning in the dictionary"><span role="img" aria-label="red textbook">📕</span></button>
         <button onClick={handleSegmentLine} title="🚧 Mark a segment line"><span role="img" aria-label="mark">🚧</span></button>
         {checkboxes.showAll ? 
-        <button onClick={handleToggle} title="🧠 shows how many times have you memorized"><span role="img" aria-label="thumbs up">{getWordMemeoryTimes(wordWithCheckbox.word)}</span></button>
+        <button title="🧠 shows how many times have you memorized"><span role="img" aria-label="thumbs up">{getWordMemeoryTimes(wordWithCheckbox.word)}</span></button>
         :
         <button onClick={handleToggle} title="🧠 Click on it if you can remember the word and it won't display after you click 7 times on different day"><span role="img" aria-label="thumbs up">{confirm? '👍' : '🎯'}</span></button>
         }
