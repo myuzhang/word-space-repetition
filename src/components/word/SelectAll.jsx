@@ -6,12 +6,18 @@ import styles from './Word.module.css'
 import MoveWordsModal from './MoveWordsModal';
 import { deleteWordsFromLocalStorage, getTodayWordsByCollectionId, getWordsByCollectionId, shuffleArray, updateWordsBackgroundColor } from '../../utils';
 
-export default function SelectAll({checkboxes, setCheckboxes}) {
+export default function SelectAll({collectionId, checkboxes, setCheckboxes}) {
+  const [currentCollectionId, setCurrentCollectionId] = useState('')
   const [modalOpen, setModalOpen] = useState(false)
   const [openPalette, setOpenPalette] = useState(false)
   const [isAllWords, setIsAllWords] = useState(false)
   const [color, setColor] = useState('#fff')
   const dispatch = useDispatch()
+
+  if (currentCollectionId !== collectionId) {
+    setCurrentCollectionId(collectionId)
+    setIsAllWords(false)
+  }
 
   function openModal() {
     const moveWords = checkboxes.checkboxWords.filter(w => w.isChecked)
@@ -48,9 +54,9 @@ export default function SelectAll({checkboxes, setCheckboxes}) {
     setIsAllWords(toggle)
     let words
     if (toggle) {
-      words = getWordsByCollectionId(checkboxes.checkboxWords[0].word.collectionId)
+      words = getWordsByCollectionId(currentCollectionId)
     } else {
-      words = getTodayWordsByCollectionId(checkboxes.checkboxWords[0].word.collectionId)
+      words = getTodayWordsByCollectionId(currentCollectionId)
     }
     setCheckboxes({
       isAllSelected: false,

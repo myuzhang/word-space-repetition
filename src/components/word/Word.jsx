@@ -59,6 +59,7 @@ export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
       checkboxes.checkboxWords[found].isChecked = newState
       const allChecked = checkboxes.checkboxWords.every(w => w.isChecked)
       setCheckboxes({
+        showAll: checkboxes.showAll,
         isAllSelected: allChecked,
         checkboxWords: [...checkboxes.checkboxWords]
       })
