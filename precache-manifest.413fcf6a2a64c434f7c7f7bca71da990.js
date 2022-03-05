@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d136b988c011eebb48231955d0ed898a",
+    "revision": "735bc94fc9a8a0194a8bf61f84005812",
     "url": "/word-space-repetition/index.html"
   },
   {
-    "revision": "3e9babe2cdd5871342e6",
-    "url": "/word-space-repetition/static/css/main.71079fef.chunk.css"
+    "revision": "810a97efb17fa1901eef",
+    "url": "/word-space-repetition/static/css/main.605caf29.chunk.css"
   },
   {
     "revision": "ad91e6dcdca3482258ba",
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/word-space-repetition/static/js/2.06a0c9f5.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "3e9babe2cdd5871342e6",
+    "revision": "810a97efb17fa1901eef",
     "url": "/word-space-repetition/static/js/main.ab873db0.chunk.js"
   },
   {
