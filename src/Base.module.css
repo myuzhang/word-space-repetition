@@ -1,6 +1,9 @@
 a:link {
   text-decoration: none;
 }
+a:link, a:visited {
+  color: blue;
+}
 
 .scrollThenSticky {
   position: sticky;
