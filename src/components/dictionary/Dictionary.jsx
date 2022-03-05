@@ -13,7 +13,8 @@ const Dictionary = ( {highlightWord} ) => {
         <button className="square-button" value="Merriam" id="Merriam" onClick={handleSelectDict}>Merriam</button>
         <button className="square-button" value="Dictionary" id="Dictionary" onClick={handleSelectDict}>Dictionary</button>
         <button className="square-button" value="Cambridge" id="Cambridge" onClick={handleSelectDict}>Cambridge</button>
-        <button className="square-button" value="Synonyms" id="Synonyms" onClick={handleSelectDict}>Synonyms</button>
+        <button className="square-button" value="Synonyms" id="Synonyms" onClick={handleSelectDict}>SYN</button>
+        <button className="square-button" value="Antonyms" id="Antonyms" onClick={handleSelectDict}>ANT</button>
       </div>
       {dictionary === 'Merriam' && <iframe src={`https://www.merriam-webster.com/dictionary/${highlightWord}`} title="Merriam"></iframe>}
       {dictionary === 'Dictionary' && <iframe src={`https://www.dictionary.com/browse/${highlightWord}`} title="Dictionary"></iframe>}
