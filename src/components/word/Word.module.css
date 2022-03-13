@@ -37,11 +37,11 @@ li .wordText { background-color: lightgray; }
 li:nth-child(odd) .wordText { background-color: rgb(240, 234, 234); }
 
 li .wordText:hover {
-  background-color: lightcoral
+  background-color: rgba(154, 151, 151, 0.947)
 }
 
 li:nth-child(odd) .wordText:hover {
-  background-color: coral
+  background-color: rgb(181, 180, 180)
 }
 
 .modalContainer {
