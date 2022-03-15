@@ -2,6 +2,12 @@
   display: flex
 }
 
+@media screen and (max-width: 640px) {
+  .idiomWrapper {
+    display: none;
+  }
+}
+
 .ribbon {
   height: 8vh;
   width:100%;

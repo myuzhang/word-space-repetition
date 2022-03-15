@@ -6,6 +6,12 @@
   grid-auto-rows: auto;
 }
 
+@media screen and (max-width: 640px) {
+  .statWrapper {
+    grid-template-columns: repeat(2, 1fr) 0.8fr;
+  }
+}
+
 .statWrapper button {
   border-radius: 2em;
   font-family:'Roboto',sans-serif;
@@ -29,6 +35,12 @@
 
 .statWrapper .fileAction {
   display: flex;
+}
+
+@media screen and (max-width: 640px) {
+  .statWrapper .fileAction {
+    display: none;
+  }
 }
 
 .statWrapper .verticalSeparate {

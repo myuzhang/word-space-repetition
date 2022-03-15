@@ -2,9 +2,16 @@
   margin: 1% 1%;
 }
 
-.fourColumns {
+.preHeader {
   display: grid;
   grid-template-columns: 0.4fr 1fr 1fr 1fr;
   grid-auto-rows: auto;
   height: 8vh;
+}
+
+@media screen and (max-width: 640px) {
+  .preHeader {
+    display: block;
+    height: auto;
+  }
 }

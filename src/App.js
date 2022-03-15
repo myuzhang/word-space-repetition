@@ -14,7 +14,7 @@ export default function App() {
     <div className={styles.appContainer}>
       <Statistics />
       <div className={baseStyles.scrollThenSticky}>
-        <div className={styles.fourColumns}>
+        <div className={styles.preHeader}>
           <Idom />
           <AddWord />
           <AddCollection />

@@ -26,6 +26,12 @@
   margin: 0;
 }
 
+@media screen and (max-width: 640px) {
+  .wordList {
+    height: 70vh;
+  }
+}
+
 .wordText {
   /* border-bottom: 1px dashed; */
   box-sizing: border-box;
