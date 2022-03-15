@@ -28,8 +28,10 @@ export default function ListCollection() {
       dispatch(action.chooseCollection(latestCurrent))
       setCurrentCollection(latestCurrent)
     }
-    const dropdown = collections.filter(c => c.name !== currentCollection.name)
-    
+
+    // Replace line 33 with 34 as we plan to still keep selected collection in the dropdown list
+    // const dropdown = collections.filter(c => c.name !== currentCollection.name)
+    const dropdown = collections
     setCollections(dropdown)
   }, [collectionState, currentCollection, dispatch])
 
