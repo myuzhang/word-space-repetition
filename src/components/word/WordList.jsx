@@ -2,24 +2,26 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { getTodayWordsByCollectionId, deleteWordsFromLocalStorage, getRecallWords, getWordsByCollectionId } from '../../utils'
 import {DELETE_COLLECTION} from '../../const'
-import Word from '../word/Word';
+// import Word from './Word'
+import WordDragDrop from './WordDragDrop'
 import SelectAll from '../word/SelectAll'
 import styles from './Word.module.css'
-import WordRecall from './WordRecall';
-import AddWordInline from './AddWordInline';
+import WordRecall from './WordRecall'
+// import AddWordInline from './AddWordInline'
 
 function checkIsAllSelected(checkboxWords) {
   return checkboxWords.every(w => w.isChecked)
 }
 
 export default function WordList({ setHighlightWord }) {
-  const [checkboxes, setCheckboxes] = useState({isAllSelected: false, checkboxWords: []})
   const wordState = useSelector(state => state.word)
   const collectionState = useSelector(state => state.collection)
   const currentCollection = useSelector(state => state.currentCollection)
   const isInRecall = useSelector(state => state.recall)
+  const [checkboxes, setCheckboxes] = useState(
+    {isAllSelected: false, checkboxWords: getTodayWordsByCollectionId(currentCollection.id).map(w => ({word: w, isChecked:false}))})
 
-  const hasWordsInCollection = getWordsByCollectionId(currentCollection.id).length
+  const hasWordsInCollection = getWordsByCollectionId(currentCollection.id).length > 0
 
   useEffect(() => {
     const words = getTodayWordsByCollectionId(currentCollection.id)
@@ -123,11 +125,14 @@ export default function WordList({ setHighlightWord }) {
                   </li>)}
               </ul>
           :
-          hasWordsInCollection === 0 ?
+          !hasWordsInCollection ?
               <p><span role="img" aria-label="grinning">😅</span> There is no word in this collection: <em>{currentCollection.name}</em></p> :
               <>
                 <SelectAll collectionId={currentCollection.id} checkboxes={checkboxes} setCheckboxes={setCheckboxes} />
-                <ul className={styles.wordList}>
+                <div className={styles.wordList}>
+                  <WordDragDrop checkboxWords={checkboxes.checkboxWords} checkboxes={checkboxes} setCheckboxes={setCheckboxes}/>
+                </div>
+                {/* <ul className={styles.wordList}>
                   {checkboxes.checkboxWords.map(wordWithCheckbox =>
                     wordWithCheckbox.word.value && 
                     <li key={wordWithCheckbox.word.id}>
@@ -136,7 +141,7 @@ export default function WordList({ setHighlightWord }) {
                   <li key="addWordInline">
                     <AddWordInline />
                   </li>
-                </ul>
+                </ul> */}
               </>
       }
     </div>

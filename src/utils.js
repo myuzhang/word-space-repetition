@@ -398,6 +398,25 @@ export const getWordSegment = (word) => {
   return false
 }
 
+export const updateReorderedWords = (reorderedWords) => {
+  if (!reorderedWords && !reorderedWords.length) {
+    return
+  }
+
+  const storage  = get()
+  let { words } = storage
+
+  if (words.length === 0) {
+    return
+  }
+
+  const reorderedWordIds = reorderedWords.map(r => r.id)
+  words = words.filter((w) => !reorderedWordIds.includes(w.id))
+  words.push(...reorderedWords)
+  storage.words = words
+  save(storage)
+}
+
 export const updateWordsBackgroundColor = (updatingWords, backgroundColor) => {
   const storage  = get()
   const { words } = storage

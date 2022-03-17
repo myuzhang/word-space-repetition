@@ -24,6 +24,7 @@
   scrollbar-color: rebeccapurple grey;
   scrollbar-width: thin;
   margin: 0;
+  padding-right: 5px;
 }
 
 @media screen and (max-width: 640px) {
@@ -39,14 +40,14 @@
   flex-grow: 1;
 }
 
-li .wordText { background-color: lightgray; }
-li:nth-child(odd) .wordText { background-color: rgb(240, 234, 234); }
+li .wordText, [data-rbd-draggable-id] .wordText { background-color: lightgray; }
+li:nth-child(odd) .wordText, [data-rbd-draggable-id]:nth-child(odd) .wordText { background-color: rgb(240, 234, 234); }
 
-li .wordText:hover {
+li .wordText:hover, [data-rbd-draggable-id] .wordText:hover {
   background-color: rgba(154, 151, 151, 0.947)
 }
 
-li:nth-child(odd) .wordText:hover {
+li:nth-child(odd) .wordText:hover,  [data-rbd-draggable-id]:nth-child(odd) .wordText:hover{
   background-color: rgb(181, 180, 180)
 }
 
