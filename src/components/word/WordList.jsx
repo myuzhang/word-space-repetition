@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { getTodayWordsByCollectionId, deleteWordsFromLocalStorage, getRecallWords, getWordsByCollectionId } from '../../utils'
 import {DELETE_COLLECTION} from '../../const'
-// import Word from './Word'
 import WordDragDrop from './WordDragDrop'
 import SelectAll from '../word/SelectAll'
 import styles from './Word.module.css'
 import WordRecall from './WordRecall'
-// import AddWordInline from './AddWordInline'
 
 function checkIsAllSelected(checkboxWords) {
   return checkboxWords.every(w => w.isChecked)
