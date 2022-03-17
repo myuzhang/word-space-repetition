@@ -46,6 +46,18 @@ export default function Word({ wordWithCheckbox, checkboxes, setCheckboxes}) {
   const handleSegmentLine = () => {
     updateWordSegment(wordWithCheckbox.word, !isSegment)
     setIsSegment(!isSegment)
+    setCheckboxes(pre => {
+      const wordIndex = pre.checkboxWords.findIndex(w => w.word.value === wordWithCheckbox.word.value)
+      if (wordIndex === -1) {
+        return pre
+      }
+      pre.checkboxWords[wordIndex].word.isSegment = !isSegment
+      return {
+        showAll: checkboxes.showAll,
+        isAllSelected: pre.isAllSelected,
+        checkboxWords: [...pre.checkboxWords]
+      }
+    })
   }
 
   const openModal = () => {

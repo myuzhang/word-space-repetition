@@ -57,6 +57,13 @@ export default function WordDragDrop({checkboxWords, checkboxes, setCheckboxes})
 
     setState({quotes});
     updateReorderedWords(quotes.map(q => q.word))
+    setCheckboxes(pre => {
+      return {
+        showAll: checkboxes.showAll,
+        isAllSelected: pre.isAllSelected,
+        checkboxWords: [...quotes]
+      }
+    })
  }
 
   return (
