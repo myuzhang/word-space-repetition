@@ -1,3 +1,13 @@
+body {
+  min-width: 800px;
+}
+
+@media screen and (max-width: 640px) {
+  body {
+    min-width: 0;
+  }
+}
+
 .appContainer {
   margin: 1% 1%;
 }

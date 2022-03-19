@@ -46,7 +46,7 @@ export default function AddWord() {
   return (
     <div className={baseStyle.newItemContainer}>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="addWord">Add new word:</label>
+        <label htmlFor="addWord">New word:</label>
         <input className={baseStyle.inputText} type="text" id="addWord" value={word} onChange={handleChange} placeholder="Add word" maxLength={INPUT_MAX_LENGTH}/>
         <input className={baseStyle.roundButton} type="submit" value="➕"/>
       </form>
