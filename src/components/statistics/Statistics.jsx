@@ -59,7 +59,7 @@ export default function Statistics() {
         <button onClick={handleSave}>Download My Words</button>
         <div className={styles.verticalSeparate}></div>
         <form>
-          <label htmlFor="restoreFromFile"><strong>Apply your Wrods:</strong></label>
+          <label htmlFor="restoreFromFile"><strong>Apply your Words:</strong></label>
           <input type='file' id="restoreFromFile" accept=".json" onChange={handleRestore}></input> 
         </form>
       </div>
